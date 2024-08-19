@@ -122,23 +122,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &50721986 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8298045291338814966, guid: 77e7c27b2c5525e4aa8cc9f99d654486, type: 3}
-  m_PrefabInstance: {fileID: 2779669268269126897}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &50721993
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 50721986}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 330a63f0c6b514c438819545f167c4ee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!65 &421334953
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -767,7 +750,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 1.02e-43, y: 1e-45, z: 7.357e-42, w: -7.9965975e+31}
+  m_BoundingSphereOverride: {x: 1.02e-43, y: 7e-45, z: 1.627e-41, w: 4.3100386e-30}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
@@ -831,6 +814,51 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.25, y: 2.1336, z: 0.024999695}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &2049149245
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2049149247}
+  - component: {fileID: 2049149246}
+  m_Layer: 0
+  m_Name: XRBtns
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2049149246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2049149245}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a08bbac60580ee47a57ab335ec45b86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputActionAsset: {fileID: -944628639613478452, guid: 21df8262bc0201942bfd3eb212f99515, type: 3}
+--- !u!4 &2049149247
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2049149245}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.012716994, y: 1.2522213, z: -0.102229744}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2779669268269126897
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1212,10 +1240,7 @@ PrefabInstance:
     - {fileID: 3927770863203988191, guid: 77e7c27b2c5525e4aa8cc9f99d654486, type: 3}
     - {fileID: 2542241161429875024, guid: 77e7c27b2c5525e4aa8cc9f99d654486, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8298045291338814966, guid: 77e7c27b2c5525e4aa8cc9f99d654486, type: 3}
-      insertIndex: 1
-      addedObject: {fileID: 50721993}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 77e7c27b2c5525e4aa8cc9f99d654486, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
@@ -1224,3 +1249,4 @@ SceneRoots:
   - {fileID: 2779669268269126897}
   - {fileID: 1783572214}
   - {fileID: 1703568386}
+  - {fileID: 2049149247}

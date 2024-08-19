@@ -1,0 +1,56 @@
+{
+    "name": "XRInputActions",
+    "maps": [
+        {
+            "name": "XRControls",
+            "id": "4dd5a13d-d605-4465-b556-33c5ef5894ed",
+            "actions": [
+                {
+                    "name": "PrimaryButton",
+                    "type": "Button",
+                    "id": "73fe4e9f-b662-47c8-ae85-0908eabd22e3",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "0a102ebe-7f39-4062-8b99-a092011db9b0",
+                    "path": "<QuestProTouchController>/primaryButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PrimaryButton",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b5364f45-9ee1-406f-979e-81a55fce6728",
+                    "path": "<OculusTouchController>/primaryButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PrimaryButton",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1045dada-004a-4074-89aa-15436a7fc1d4",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PrimaryButton",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

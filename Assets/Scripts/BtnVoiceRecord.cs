@@ -48,6 +48,7 @@ public class BtnVoiceRecord : MonoBehaviour
             this.isRecording = false;
             micRecorder.StopRecording();
             micRecorder.PlayRecording();
+            micRecorder.SaveRecording();
         }
     }
 }

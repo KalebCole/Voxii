@@ -1,3 +1,4 @@
+using System.IO;
 using UnityEngine;
 
 public class MicRecorder : MonoBehaviour
@@ -11,7 +12,7 @@ public class MicRecorder : MonoBehaviour
         // Get the default microphone
         if (Microphone.devices.Length > 0)
         {
-            microphoneName = Microphone.devices[0]; // Using the first available microphone
+            this.microphoneName = Microphone.devices[0]; // Using the first available microphone
         }
         else
         {
@@ -25,32 +26,48 @@ public class MicRecorder : MonoBehaviour
         {
             Debug.Log("Unable to record. Mic not detected");
         }
-        if (!isRecording)
+        if (!this.isRecording)
         {
             // Start recording from the microphone
-            audioClip = Microphone.Start(microphoneName, false, 60, 44100); // 1 minute max with 16kHz sample rate since whisper requires that
-            isRecording = true;
+            this.audioClip = Microphone.Start(microphoneName, false, 60, 44100); // 1 minute max with 16kHz sample rate since whisper requires that
+            this.isRecording = true;
             Debug.Log("Recording started.");
         }
     }
 
     public void StopRecording()
     {
-        if (isRecording)
+        if (this.isRecording)
         {
             // Stop recording
             Microphone.End(microphoneName);
-            isRecording = false;
+            this.isRecording = false;
             Debug.Log("Recording stopped.");
+        }
+    }
+
+    public void SaveRecording()
+    {
+        if (this.audioClip != null && !this.isRecording)
+        {
+            // TODO: make sure that the name changes every time you save it
+            string filePath = Path.Combine(Application.persistentDataPath, "recording.wav");
+            WavUtility.SaveWav(filePath, audioClip);
+            Debug.Log("Recording saved to " + filePath);
+        }
+        else
+        {
+            Debug.Log("No recording available to save.");
         }
     }
 
     public void PlayRecording()
     {
-        if (audioClip != null && !isRecording)
+        if (this.audioClip != null && !this.isRecording)
         {
             // Play the recorded audio
-            AudioSource audioSource = GetComponent<AudioSource>();
+            AudioSource audioSource = GetComponent<AudioSource>(); // used to get a component attached to the same object
+            // the audio source object is attached to the same game object
             audioSource.clip = audioClip;
             audioSource.Play();
             Debug.Log("Playing recording.");

@@ -29,7 +29,7 @@ public class MicRecorder : MonoBehaviour
         if (!this.isRecording)
         {
             // Start recording from the microphone
-            this.audioClip = Microphone.Start(microphoneName, false, 60, 44100); // 1 minute max with 16kHz sample rate since whisper requires that
+            this.audioClip = Microphone.Start(microphoneName, false, 60, 16000); // 1 minute max with 16kHz sample rate since whisper requires that
             this.isRecording = true;
             Debug.Log("Recording started.");
         }

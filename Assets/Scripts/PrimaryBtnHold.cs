@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class BtnVoiceRecord : MonoBehaviour
+public class PrimaryBtnHold : MonoBehaviour
 {
     public InputActionAsset inputActionAsset;
     public MicRecorder micRecorder;

@@ -18,15 +18,20 @@ public class XRButtonDebug : MonoBehaviour
         primaryButton.Enable();
 
         // Subscribe to the action events
-        primaryButton.performed += ctx => Debug.Log("Primary Button pressed");
+        primaryButton.performed += OnPrimaryButtonPressed;
     }
 
     void OnDisable()
     {
         // Unsubscribe from action events when disabled
-        primaryButton.performed -= ctx => Debug.Log("Primary Button pressed");
+        primaryButton.performed -= OnPrimaryButtonPressed;
 
         // Disable actions
         primaryButton.Disable();
+    }
+
+    private void OnPrimaryButtonPressed(InputAction.CallbackContext context)
+    {
+        Debug.Log("Primary Button pressed");
     }
 }

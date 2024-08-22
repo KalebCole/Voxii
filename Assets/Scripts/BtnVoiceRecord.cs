@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 
 public class BtnVoiceRecord : MonoBehaviour
 {
-    public XRButtonDebug xrButtonDebug;
+    public InputActionAsset inputActionAsset;
 
     private InputAction primaryButton;
     private bool isRecording = false;
@@ -11,7 +11,9 @@ public class BtnVoiceRecord : MonoBehaviour
     void OnEnable()
     {
         // Get the primary button action from the XRButtonDebug script
-        this.primaryButton = xrButtonDebug.inputActionAsset.FindActionMap("XRControls").FindAction("PrimaryButton");
+        var actionMap = inputActionAsset.FindActionMap("XRControls");
+
+        this.primaryButton = actionMap.FindAction("PrimaryButton");
 
         this.primaryButton.Enable();
 

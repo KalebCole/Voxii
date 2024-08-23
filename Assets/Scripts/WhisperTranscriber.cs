@@ -11,6 +11,8 @@ public class WhisperTranscriber : MonoBehaviour
     private string wavFilePath;
     private WhisperProcessor processor;
     private WhisperFactory whisperFactory;
+    private bool processorDisposed = false;
+    private bool whisperFactoryDisposed = false;
 
 
     // Start is called before the first frame update in Unity
@@ -26,6 +28,8 @@ public class WhisperTranscriber : MonoBehaviour
         {
             Debug.Log("File doesn't exist");
         }
+
+        Debug.Log("Test");
 
         this.whisperFactory = WhisperFactory.FromPath(this.modelPath);
         this.processor = this.whisperFactory.CreateBuilder()
@@ -45,8 +49,14 @@ public class WhisperTranscriber : MonoBehaviour
     void OnDestroy()
     {
         // Ensure proper cleanup when the script is destroyed
-        this.processor?.Dispose();
-        this.whisperFactory?.Dispose();
+        if (!this.processorDisposed)
+        {
+            this.processor?.Dispose();
+        }
+        if (!this.whisperFactoryDisposed)
+        {
+            this.whisperFactory?.Dispose();
+        }
     }
 
     private async Task ProcessAudio()

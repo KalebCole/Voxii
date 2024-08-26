@@ -53,6 +53,7 @@ public class MicRecorder : MonoBehaviour
             // TODO: make sure that the name changes every time you save it
             string filePath = Path.Combine(Application.persistentDataPath, "recording.wav");
             WavUtility.SaveWav(filePath, audioClip);
+            PlayRecording();
             Debug.Log("Recording saved to " + filePath);
         }
         else

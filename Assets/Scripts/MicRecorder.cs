@@ -1,8 +1,11 @@
 using System.IO;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MicRecorder : MonoBehaviour
 {
+    public GameObject loadingSymbol;
+
     private AudioClip audioClip;
     private string microphoneName;
     private bool isRecording = false;
@@ -31,6 +34,7 @@ public class MicRecorder : MonoBehaviour
             // Start recording from the microphone
             this.audioClip = Microphone.Start(microphoneName, false, 60, 16000); // 1 minute max with 16kHz sample rate since whisper requires that
             this.isRecording = true;
+            SetLoadingSymbolVisibility(true);
             Debug.Log("Recording started.");
         }
     }
@@ -42,7 +46,18 @@ public class MicRecorder : MonoBehaviour
             // Stop recording
             Microphone.End(microphoneName);
             this.isRecording = false;
+            SetLoadingSymbolVisibility(false);
             Debug.Log("Recording stopped.");
+        }
+    }
+
+    private void SetLoadingSymbolVisibility(bool isVisible)
+    {
+        Debug.Log("set function activated");
+        if (loadingSymbol != null)
+        {
+            Debug.Log(isVisible);
+            loadingSymbol.gameObject.SetActive(isVisible);
         }
     }
 

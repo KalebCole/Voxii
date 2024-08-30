@@ -1,11 +1,15 @@
 using System.IO;
 using System.Threading.Tasks;
 using UnityEngine;
+using TMPro;
 using Whisper.net;
 using Whisper.net.Logger;
 
 public class WhisperTranscriber : MonoBehaviour
 {
+    // Variable for the user text display
+    public TextMeshProUGUI displayText;
+
     // Variables to hold the model path and audio file path.
     private string modelPath;
     private string wavFilePath;
@@ -69,6 +73,12 @@ public class WhisperTranscriber : MonoBehaviour
         await foreach (var result in this.processor.ProcessAsync(fileStream))
         {
             Debug.Log($"{result.Start}->{result.End}: {result.Text}");
+
+            // Update the UI text
+            if (displayText != null)
+            {
+                displayText.text = $"{result.Start}->{result.End}: {result.Text}";
+            }
         }
     }
 }

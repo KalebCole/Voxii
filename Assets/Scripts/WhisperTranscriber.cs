@@ -58,6 +58,7 @@ public class WhisperTranscriber : MonoBehaviour
             this.whisperFactory?.Dispose();
         }
     }
+    
 
     private async Task ProcessAudio()
     {

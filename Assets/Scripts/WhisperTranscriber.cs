@@ -21,7 +21,7 @@ public class WhisperTranscriber : MonoBehaviour
 
 
     // Start is called before the first frame update in Unity
-    void Start()
+    void Awake()
     {
         // Set the ggmlType and initialize model and wav file paths
         // var ggmlType = GgmlType.Base;
@@ -42,10 +42,12 @@ public class WhisperTranscriber : MonoBehaviour
                                       .Build();
 
         // Optional: Log messages from the Whisper library
-        LogProvider.Instance.OnLog += (level, message) =>
-        {
-            Debug.Log($"{level}: {message}");
-        };
+        // LogProvider.Instance.OnLog += (level, message) =>
+        // {
+        //     Debug.Log($"{level}: {message}");
+        // };
+
+        Debug.Log("Whisper initialized");
 
         // Create and use the Whisper factory and processor to transcribe the audio file
         // await ProcessAudio();

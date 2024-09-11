@@ -8,6 +8,8 @@ public class MicRecorder : MonoBehaviour
     private AudioClip audioClip;
     private string microphoneName;
     private bool isRecording = false;
+    private float recordingStartTime;
+    private float recordingDuration; // The actual duration of the recorded audio
 
     void Start()
     {
@@ -27,12 +29,14 @@ public class MicRecorder : MonoBehaviour
         if (microphoneName == null)
         {
             Debug.Log("Unable to record. Mic not detected");
+            return;
         }
         if (!this.isRecording)
         {
             // Start recording from the microphone
-            this.audioClip = Microphone.Start(microphoneName, false, 60, 16000); // 1 minute max with 16kHz sample rate since whisper requires that
+            this.audioClip = Microphone.Start(microphoneName, false, 60, 16000); // 1 minute max with 16kHz sample rate
             this.isRecording = true;
+            recordingStartTime = Time.time; // Record the start time
             SetLoadingSymbolVisibility(true);
             Debug.Log("Recording started.");
         }
@@ -42,21 +46,46 @@ public class MicRecorder : MonoBehaviour
     {
         if (this.isRecording)
         {
+            // Calculate the actual duration of the recording
+            recordingDuration = Time.time - recordingStartTime;
+
             // Stop recording
             Microphone.End(microphoneName);
             this.isRecording = false;
             SetLoadingSymbolVisibility(false);
+
+            // Trim the audio clip to only the actual recorded length
+            if (recordingDuration < 60f)
+            {
+                TrimRecording();
+            }
+
             Debug.Log("Recording stopped.");
         }
     }
 
+    private void TrimRecording()
+    {
+        // Get the actual recorded samples (based on time)
+        int samplesRecorded = (int)(audioClip.frequency * recordingDuration);
+        float[] samples = new float[samplesRecorded];
+        audioClip.GetData(samples, 0);
+
+        // Create a new AudioClip with only the trimmed data
+        AudioClip trimmedClip = AudioClip.Create(audioClip.name, samplesRecorded, audioClip.channels, audioClip.frequency, false);
+        trimmedClip.SetData(samples, 0);
+
+        // Replace the old audioClip with the trimmed one
+        audioClip = trimmedClip;
+
+        Debug.Log($"Recording trimmed to {recordingDuration} seconds.");
+    }
+
     private void SetLoadingSymbolVisibility(bool isVisible)
     {
-        Debug.Log("set function activated");
         if (loadingSymbol != null)
         {
-            Debug.Log(isVisible);
-            loadingSymbol.gameObject.SetActive(isVisible);
+            loadingSymbol.SetActive(isVisible);
         }
     }
 
@@ -64,10 +93,9 @@ public class MicRecorder : MonoBehaviour
     {
         if (this.audioClip != null && !this.isRecording)
         {
-            // TODO: make sure that the name changes every time you save it
+            // Save the recording as a .wav file
             string filePath = Path.Combine(Application.persistentDataPath, "recording.wav");
             WavUtility.SaveWav(filePath, audioClip);
-            PlayRecording();
             Debug.Log("Recording saved to " + filePath);
         }
         else

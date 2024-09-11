@@ -7650,6 +7650,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputActionAsset: {fileID: -944628639613478452, guid: 21df8262bc0201942bfd3eb212f99515, type: 3}
   micRecorder: {fileID: 614527622}
+  whisperTranscriber: {fileID: 1007842186}
 --- !u!114 &614527624
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7657,7 +7658,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 614527620}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5a08bbac60580ee47a57ab335ec45b86, type: 3}
   m_Name: 
@@ -12408,6 +12409,51 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4022886219190538, guid: 75221d19731aa453d81714a24451c72a, type: 3}
   m_PrefabInstance: {fileID: 1007336735}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1007842185
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1007842187}
+  - component: {fileID: 1007842186}
+  m_Layer: 0
+  m_Name: WhisperTranscriber
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1007842186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1007842185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a219b17b143fe094d8f120e9de85bf63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  displayText: {fileID: 0}
+--- !u!4 &1007842187
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1007842185}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.8967652, y: 1.2306311, z: -3.537426}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1010334683
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29766,51 +29812,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4395442329580582, guid: 55c9aefe9fe274201bea0c3d22de1acc, type: 3}
   m_PrefabInstance: {fileID: 1978973284}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1981469089
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1981469091}
-  - component: {fileID: 1981469090}
-  m_Layer: 0
-  m_Name: WhisperRecorder
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1981469090
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1981469089}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a219b17b143fe094d8f120e9de85bf63, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  displayText: {fileID: 78576023}
---- !u!4 &1981469091
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1981469089}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.8967652, y: 1.2306311, z: -3.537426}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1986060945
 GameObject:
   m_ObjectHideFlags: 0
@@ -32135,8 +32136,8 @@ SceneRoots:
   - {fileID: 1890905921}
   - {fileID: 1795649124}
   - {fileID: 614527625}
-  - {fileID: 1981469091}
   - {fileID: 557237145}
   - {fileID: 1911548820}
   - {fileID: 507714851}
   - {fileID: 1193612608}
+  - {fileID: 1007842187}

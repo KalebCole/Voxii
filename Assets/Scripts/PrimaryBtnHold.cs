@@ -53,7 +53,7 @@ public class PrimaryBtnHold : MonoBehaviour
 
         this.isRecording = false;
         micRecorder.StopRecording();
-        micRecorder.PlayRecording();
+        // micRecorder.PlayRecording();
         micRecorder.SaveRecording();
         string transcription = await whisperTranscriber.TranscribeRecording();
         Debug.Log(transcription);

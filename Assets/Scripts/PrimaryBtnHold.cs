@@ -6,6 +6,8 @@ public class PrimaryBtnHold : MonoBehaviour
     public InputActionAsset inputActionAsset;
     public MicRecorder micRecorder;
 
+    public WhisperTranscriber whisperTranscriber;
+
     private InputAction primaryButton;
     private bool isRecording = false;
 
@@ -41,14 +43,19 @@ public class PrimaryBtnHold : MonoBehaviour
         }
     }
 
-    private void OnRelease(InputAction.CallbackContext context)
+    private async void OnRelease(InputAction.CallbackContext context)
     {
-        if (this.isRecording) // For safety
+        if (!this.isRecording)
         {
-            this.isRecording = false;
-            micRecorder.StopRecording();
-            micRecorder.PlayRecording();
-            micRecorder.SaveRecording();
+            Debug.LogWarning("Primary button released without recording started.");
+            return;
         }
+
+        this.isRecording = false;
+        micRecorder.StopRecording();
+        micRecorder.PlayRecording();
+        micRecorder.SaveRecording();
+        string transcription = await whisperTranscriber.TranscribeRecording();
+        Debug.Log(transcription);
     }
 }

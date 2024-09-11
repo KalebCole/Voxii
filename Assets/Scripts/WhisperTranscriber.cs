@@ -1,4 +1,5 @@
 using System.IO;
+using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using TMPro;
@@ -20,7 +21,7 @@ public class WhisperTranscriber : MonoBehaviour
 
 
     // Start is called before the first frame update in Unity
-    async void Start()
+    void Start()
     {
         // Set the ggmlType and initialize model and wav file paths
         // var ggmlType = GgmlType.Base;
@@ -47,7 +48,7 @@ public class WhisperTranscriber : MonoBehaviour
         };
 
         // Create and use the Whisper factory and processor to transcribe the audio file
-        await ProcessAudio();
+        // await ProcessAudio();
     }
 
     void OnDestroy()
@@ -62,23 +63,25 @@ public class WhisperTranscriber : MonoBehaviour
             this.whisperFactory?.Dispose();
         }
     }
-    
 
-    private async Task ProcessAudio()
+    public async Task<string> TranscribeRecording()
     {
+        StringBuilder finalResult = new StringBuilder();
 
         using var fileStream = File.OpenRead(this.wavFilePath);
 
         // Process the audio file asynchronously and log the results
         await foreach (var result in this.processor.ProcessAsync(fileStream))
         {
-            Debug.Log($"{result.Start}->{result.End}: {result.Text}");
+            Debug.Log(result.Text);
 
             // Update the UI text
-            if (displayText != null)
-            {
-                displayText.text = $"{result.Start}->{result.End}: {result.Text}";
-            }
+            displayText.text = result.Text;
+
+            // Append to final result
+            finalResult.AppendLine(result.Text);
         }
+
+        return finalResult.ToString();
     }
 }

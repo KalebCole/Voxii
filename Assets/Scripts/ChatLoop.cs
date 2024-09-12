@@ -65,5 +65,6 @@ public class ChatLoop : MonoBehaviour
         Debug.Log("Assistant: " + assistantMessage["content"]);
 
         // TODO: call tts
+        AIVoice.Speak(assistantMessage["content"].ToString());
     }
 }

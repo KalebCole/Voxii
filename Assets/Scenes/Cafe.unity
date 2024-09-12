@@ -1530,7 +1530,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 79125435}
-  - component: {fileID: 79125434}
+  - component: {fileID: 79125436}
   m_Layer: 0
   m_Name: ChatLoop
   m_TagString: Untagged
@@ -1538,18 +1538,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &79125434
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 79125433}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a47b24899bd20b4480e11cbcd84ca21, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &79125435
 Transform:
   m_ObjectHideFlags: 0
@@ -1565,6 +1553,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &79125436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 79125433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a47b24899bd20b4480e11cbcd84ca21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &83680912
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7695,6 +7695,7 @@ MonoBehaviour:
   inputActionAsset: {fileID: -944628639613478452, guid: 21df8262bc0201942bfd3eb212f99515, type: 3}
   micRecorder: {fileID: 614527622}
   whisperTranscriber: {fileID: 1007842186}
+  chatLoop: {fileID: 79125436}
 --- !u!114 &614527624
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12482,7 +12483,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a219b17b143fe094d8f120e9de85bf63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  displayText: {fileID: 0}
+  displayText: {fileID: 78576023}
 --- !u!4 &1007842187
 Transform:
   m_ObjectHideFlags: 0

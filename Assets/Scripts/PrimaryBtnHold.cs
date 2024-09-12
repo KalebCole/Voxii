@@ -7,6 +7,7 @@ public class PrimaryBtnHold : MonoBehaviour
     public MicRecorder micRecorder;
 
     public WhisperTranscriber whisperTranscriber;
+    public ChatLoop chatLoop;
 
     private InputAction primaryButton;
     private bool isRecording = false;
@@ -56,6 +57,9 @@ public class PrimaryBtnHold : MonoBehaviour
         // micRecorder.PlayRecording();
         micRecorder.SaveRecording();
         string transcription = await whisperTranscriber.TranscribeRecording();
+
         Debug.Log(transcription);
+
+        chatLoop.SendUserMessage(transcription);
     }
 }

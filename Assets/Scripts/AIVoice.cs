@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public static class SpeakMsg
+public static class AIVoice
 {
-    public static async void DownloadAndSpeak(string msg)
+    public static async void Speak(string msg, bool download = false)
     {
         GameObject aiVoiceObject = GameObject.Find("AIVoice");
 
@@ -23,12 +23,21 @@ public static class SpeakMsg
         }
 
         string url = "https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=en&q=" + Uri.EscapeDataString(msg);
-        string filePath = Path.Combine(Application.persistentDataPath, "output.mp3");
 
         try
         {
-            await DownloadFileAsync(url, filePath);
-            await PlayDownloadedAudio(filePath, audioSource);
+            if (download)
+            {
+                // Download and play from file
+                string filePath = Path.Combine(Application.persistentDataPath, "output.mp3");
+                await DownloadFileAsync(url, filePath);
+                await PlayDownloadedAudio(filePath, audioSource);
+            }
+            else
+            {
+                // Stream and play directly from URL
+                await StreamAndPlayAudio(url, audioSource);
+            }
         }
         catch (Exception e)
         {
@@ -76,6 +85,31 @@ public static class SpeakMsg
             else
             {
                 Debug.LogError("Error loading audio: " + request.error);
+            }
+        }
+    }
+
+    private static async Task StreamAndPlayAudio(string url, AudioSource audioSource)
+    {
+        using (UnityWebRequest request = UnityWebRequestMultimedia.GetAudioClip(url, AudioType.MPEG))
+        {
+            request.SetRequestHeader("User-Agent", "Mozilla/5.0 (Windows NT 6.1; rv:25.0) Gecko/20100101 Firefox/25.0");
+
+            var asyncOperation = request.SendWebRequest();
+
+            while (!asyncOperation.isDone)
+            {
+                await Task.Yield(); // Ensure non-blocking while streaming the audio.
+            }
+
+            if (request.result == UnityWebRequest.Result.Success)
+            {
+                audioSource.clip = DownloadHandlerAudioClip.GetContent(request);
+                audioSource.Play();
+            }
+            else
+            {
+                Debug.LogError("Error streaming audio: " + request.error);
             }
         }
     }

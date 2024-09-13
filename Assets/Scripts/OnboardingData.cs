@@ -15,7 +15,7 @@ public class OnboardingData
 		PersonName = "Kaleb";
 		LanguageProficiency = "Beginner";
 		LanguageToLearn = "English";
-		PhrasesToWorkOn = new List<string> { "Making small talk" };
+		PhrasesToWorkOn = new List<string> { "Greeting and Introduction", "Ordering Food and Drinks" };
 		Scene = "Cafe";
 		SceneToRole = new Dictionary<string, string>
 		{

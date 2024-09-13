@@ -58,7 +58,7 @@ public class PrimaryBtnHold : MonoBehaviour
         micRecorder.SaveRecording();
         string transcription = await whisperTranscriber.TranscribeRecording();
 
-        Debug.Log(transcription);
+        Debug.Log("transcription in PrimaryBtnHold: " + transcription);
 
         chatLoop.SendUserMessage(transcription);
     }

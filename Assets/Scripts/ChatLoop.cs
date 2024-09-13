@@ -2,7 +2,7 @@
 
 using UnityEngine;
 using Newtonsoft.Json.Linq;
-// using IPA;
+using System.Threading.Tasks;
 
 public class ChatLoop : MonoBehaviour
 {
@@ -35,6 +35,7 @@ public class ChatLoop : MonoBehaviour
     };
 
     public GroqApiClient groqApi = new GroqApiClient();
+    public bool isResponding = false;
     private JArray chatHistory = new JArray
     {
         systemPrompt,
@@ -54,7 +55,7 @@ public class ChatLoop : MonoBehaviour
         chatHistory.RemoveAt(1);
     }
 
-    public async void SendUserMessage(string msg)
+    public async Task SendUserMessage(string msg)
     {
         Debug.Log("Sending message: " + msg);
         JObject userMessage = new JObject { ["role"] = "user", ["content"] = msg };
@@ -86,6 +87,7 @@ public class ChatLoop : MonoBehaviour
         Debug.Log("Assistant: " + assistantMessage["content"]);
 
         // TODO: call tts
-        AIVoice.Speak(assistantMessage["content"].ToString());
+        await AIVoice.Speak(content.ToString());
+        isResponding = false;
     }
 }

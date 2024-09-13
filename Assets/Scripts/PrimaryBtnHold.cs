@@ -37,8 +37,30 @@ public class PrimaryBtnHold : MonoBehaviour
 
     private void OnPress(InputAction.CallbackContext context)
     {
+        // Find the ChatLoop GameObject and get its ChatLoop component
+        var chatLoopGameObject = GameObject.Find("ChatLoop");
+        if (chatLoopGameObject == null)
+        {
+            Debug.LogError("ChatLoop GameObject not found!");
+            return;
+        }
+
+        var chatLoop = chatLoopGameObject.GetComponent<ChatLoop>();
+        if (chatLoop == null)
+        {
+            Debug.LogError("ChatLoop component not found on ChatLoop GameObject!");
+            return;
+        }
+
+        // Check if the AI is responding
+        if (chatLoop.isResponding)
+        {
+            Debug.Log("Cannot record, AI is still responding.");
+            return;
+        }
         if (!this.isRecording) // The performer event might be sent multiple times while holding down
         {
+            chatLoop.isResponding = true;
             this.isRecording = true;
             micRecorder.StartRecording();
         }
@@ -48,18 +70,17 @@ public class PrimaryBtnHold : MonoBehaviour
     {
         if (!this.isRecording)
         {
-            Debug.LogWarning("Primary button released without recording started.");
             return;
         }
 
-        this.isRecording = false;
         micRecorder.StopRecording();
         // micRecorder.PlayRecording();
         micRecorder.SaveRecording();
+        this.isRecording = false;
         string transcription = await whisperTranscriber.TranscribeRecording();
 
         Debug.Log("transcription in PrimaryBtnHold: " + transcription);
 
-        chatLoop.SendUserMessage(transcription);
+        await chatLoop.SendUserMessage(transcription);
     }
 }

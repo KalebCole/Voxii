@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 
 public static class AIVoice
 {
-    public static async void Speak(string msg, bool download = false)
+    public static async Task Speak(string msg, bool download = false)
     {
         GameObject aiVoiceObject = GameObject.Find("AIVoice");
 
@@ -106,6 +106,12 @@ public static class AIVoice
             {
                 audioSource.clip = DownloadHandlerAudioClip.GetContent(request);
                 audioSource.Play();
+                
+                // Wait until the audio has finished playing
+                while (audioSource.isPlaying)
+                {
+                    await Task.Yield(); // Yield control back to the Unity main thread while we wait
+                }
             }
             else
             {

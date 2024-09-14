@@ -3,14 +3,16 @@
 using UnityEngine;
 using Newtonsoft.Json.Linq;
 using System.Threading.Tasks;
+using System.IO;
 
 public class ChatLoop : MonoBehaviour
 {
-    static readonly string initialAIMessage = "Hello, welcome to our cafe. What can I get for you today?";
+    public GroqApiClient groqApi = new GroqApiClient();
+    public bool isResponding = false;
 
-    static readonly OnboardingData onboardingData = new OnboardingData();
-
-    static readonly JObject systemPrompt = new JObject
+    private static readonly string initialAIMessage = "Hello, welcome to our cafe. What can I get for you today?";
+    private static readonly OnboardingData onboardingData = new OnboardingData();
+    private static readonly JObject systemPrompt = new JObject
     {
         ["role"] = "system",
         ["content"] = $@"
@@ -30,13 +32,9 @@ public class ChatLoop : MonoBehaviour
     Do not overwhelm the person by asking too many questions
     Act as though this is a normal conversation
     When {onboardingData.PersonName} doesn't say have proper {onboardingData.LanguageToLearn}, act as if you were in a normal conversation and ask them a question while being confused
-
         "
     };
-
-    public GroqApiClient groqApi = new GroqApiClient();
-    public bool isResponding = false;
-    private JArray chatHistory = new JArray
+    private readonly JArray chatHistory = new JArray
     {
         systemPrompt,
         new JObject
@@ -45,7 +43,31 @@ public class ChatLoop : MonoBehaviour
             ["content"] = initialAIMessage
         }
     };
+    private string chatLogFilePath;
 
+    private void Start()
+    {
+        chatLogFilePath = Path.Combine(Application.persistentDataPath, "chat_log.txt");
+        ClearChatLog();
+    }
+
+    private void ClearChatLog()
+    {
+        if (File.Exists(chatLogFilePath))
+        {
+            File.WriteAllText(chatLogFilePath, string.Empty);  // Clear the file
+        }
+        else
+        {
+            File.Create(chatLogFilePath).Dispose();  // Create the file if it doesn't exist
+        }
+    }
+
+    private void LogPlayerMessage(string message)
+    {
+        // Append the message to the log file with a newline
+        File.AppendAllText(chatLogFilePath, message + "\n");
+    }
 
     private void TrimChatHistory(int maxMessages = 5)
     {
@@ -59,6 +81,9 @@ public class ChatLoop : MonoBehaviour
     {
         Debug.Log("Sending message: " + msg);
         JObject userMessage = new JObject { ["role"] = "user", ["content"] = msg };
+
+        LogPlayerMessage(msg);
+
         TrimChatHistory();
         chatHistory.Add(userMessage);
 
@@ -84,9 +109,8 @@ public class ChatLoop : MonoBehaviour
             ["content"] = content
         };
         chatHistory.Add(assistantMessage);
-        Debug.Log("Assistant: " + assistantMessage["content"]);
+        Debug.Log("Assistant: " + content);
 
-        // TODO: call tts
         await AIVoice.Speak(content.ToString());
         isResponding = false;
     }

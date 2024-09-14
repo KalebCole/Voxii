@@ -3,17 +3,44 @@ using System.IO;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
+using PiperSharp;
 
 public static class AIVoice
 {
     public static async Task Speak(string msg, bool download = false)
     {
-        await SpeakGoogle(msg, download);
+        // await SpeakGoogle(msg, download);
+        await SpeakPiper(msg);
     }
 
     private static async Task SpeakPiper(string msg)
     {
         // TODO: make piper return byte array directly and play it instead of saving it to a file
+        string modelLoc = Path.Combine(Application.dataPath, "PiperTTS", "models");
+        string workingDir = Path.Combine(Application.dataPath, "PiperTTS", "piper");
+        string exeLoc = Path.Combine(workingDir, "piper.exe");
+
+        var model = await VoiceModel.LoadModelByKey(modelLoc, "en_US-ryan-low");
+
+        PiperProvider piperModel = new PiperProvider(new PiperConfiguration()
+        {
+            ExecutableLocation = exeLoc,
+            WorkingDirectory = workingDir,
+
+            Model = model,
+            UseCuda = false
+        });
+
+        var data = await piperModel.InferAsync(msg, AudioOutputType.Wav);
+
+        // var fs = File.OpenWrite("output.wav");
+        // fs.Write(data, 0, data.Length);
+        // fs.Flush();
+        // fs.Close();
+
+        // Open file in persistent data path
+        string filePath = Path.Combine(Application.persistentDataPath, "output.wav");
+        File.WriteAllBytes(filePath, data);
     }
 
     private static async Task SpeakGoogle(string msg, bool download)

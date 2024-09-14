@@ -25,7 +25,7 @@ public class WhisperTranscriber : MonoBehaviour
     {
         // Set the ggmlType and initialize model and wav file paths
         // var ggmlType = GgmlType.Base;
-        this.modelPath = Path.Combine(Application.dataPath, "WhisperModels", "ggml-base.en.bin");
+        this.modelPath = Path.Combine(Application.streamingAssetsPath, "WhisperModels", "ggml-base.en.bin");
         this.wavFilePath = Path.Combine(Application.persistentDataPath, "recording.wav");
 
         // Check if the model file exists; if not, download it

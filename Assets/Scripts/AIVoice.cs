@@ -16,8 +16,8 @@ public static class AIVoice
     private static async Task SpeakPiper(string msg)
     {
         // TODO: make piper return byte array directly and play it instead of saving it to a file
-        string modelLoc = Path.Combine(Application.dataPath, "PiperTTS", "models");
-        string workingDir = Path.Combine(Application.dataPath, "PiperTTS", "piper");
+        string modelLoc = Path.Combine(Application.streamingAssetsPath, "PiperTTS", "models");
+        string workingDir = Path.Combine(Application.streamingAssetsPath, "PiperTTS", "piper");
         string exeLoc = Path.Combine(workingDir, "piper.exe");
 
         var model = await VoiceModel.LoadModelByKey(modelLoc, "en_US-ryan-low");

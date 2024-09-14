@@ -41,8 +41,22 @@ public static class AIVoice
         // Open file in persistent data path
         string filePath = Path.Combine(Application.persistentDataPath, "output.wav");
         File.WriteAllBytes(filePath, data);
-    }
 
+        GameObject aiVoiceObject = GameObject.Find("AIVoice");
+        if (aiVoiceObject == null)
+        {
+            Debug.LogError("GameObject 'AIVoice' not found in the scene.");
+            return;
+        }
+
+        AudioSource audioSource = aiVoiceObject.GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            audioSource = aiVoiceObject.AddComponent<AudioSource>();
+        }
+
+        await PlayDownloadedAudio(filePath, audioSource, AudioType.WAV);
+    }
     private static async Task SpeakGoogle(string msg, bool download)
     {
         GameObject aiVoiceObject = GameObject.Find("AIVoice");
@@ -103,9 +117,9 @@ public static class AIVoice
         }
     }
 
-    private static async Task PlayDownloadedAudio(string filePath, AudioSource audioSource)
+    private static async Task PlayDownloadedAudio(string filePath, AudioSource audioSource, AudioType audioType = AudioType.MPEG)
     {
-        using (UnityWebRequest request = UnityWebRequestMultimedia.GetAudioClip("file://" + filePath, AudioType.MPEG))
+        using (UnityWebRequest request = UnityWebRequestMultimedia.GetAudioClip("file://" + filePath, audioType))
         {
             var asyncOperation = request.SendWebRequest();
 
@@ -118,6 +132,12 @@ public static class AIVoice
             {
                 audioSource.clip = DownloadHandlerAudioClip.GetContent(request);
                 audioSource.Play();
+
+                // Wait for the audio clip to finish playing
+                while (audioSource.isPlaying)
+                {
+                    await Task.Yield(); // Continue non-blocking while waiting for the audio to finish.
+                }
             }
             else
             {

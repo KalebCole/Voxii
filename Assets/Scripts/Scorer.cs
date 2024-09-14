@@ -63,9 +63,6 @@ public class Scorer
             ["temperature"] = 1.2
         };
 
-        // log the request
-        File.AppendAllText(chatLogFilePath, request.ToString());
-
         JObject? response = await groqApi.CreateChatCompletionAsync(request);
         var content = response?["choices"]?[0]?["message"]?["content"];
 

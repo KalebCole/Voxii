@@ -25,7 +25,7 @@ public class Scorer : MonoBehaviour
     {
         JArray userMsgs = new();
 
-        string chatLogFilePath = Application.persistentDataPath + "/chatLogs.txt";
+        string chatLogFilePath = Application.persistentDataPath + "/chat_logs.txt";
 
         if (File.Exists(chatLogFilePath))
         {

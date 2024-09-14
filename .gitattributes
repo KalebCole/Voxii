@@ -1,1 +1,3 @@
 Assets/WhisperModels/*.bin filter=lfs diff=lfs merge=lfs -text
+Assets/StreamingAssets/PiperTTS/models/en_US-ryan-low/en_US-ryan-low.onnx filter=lfs diff=lfs merge=lfs -text
+Assets/StreamingAssets/WhisperModels/*.bin filter=lfs diff=lfs merge=lfs -text

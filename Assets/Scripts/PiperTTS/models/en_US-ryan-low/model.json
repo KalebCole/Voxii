@@ -1,0 +1,29 @@
+{
+  "key": "en_US-ryan-low",
+  "name": "ryan",
+  "num_speakers": 1,
+  "speaker_id_map": {},
+  "files": {
+    "en/en_US/ryan/low/en_US-ryan-low.onnx": {
+      "size_bytes": 63104526,
+      "md5_digest": "32f6a995d6d561cd040b20a76f4edb1e"
+    },
+    "en/en_US/ryan/low/en_US-ryan-low.onnx.json": {
+      "size_bytes": 4165,
+      "md5_digest": "38eb0602e1f8bf627a0d9a747723cbf6"
+    },
+    "en/en_US/ryan/low/MODEL_CARD": {
+      "size_bytes": 263,
+      "md5_digest": "030252d21b0bd1048c37a9eb7f94eb17"
+    }
+  },
+  "language": {
+    "code": "en_US",
+    "family": "en",
+    "name_english": "English"
+  },
+  "audio": {
+    "quality": "Low",
+    "sample_rate": 16000
+  }
+}

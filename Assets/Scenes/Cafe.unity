@@ -1565,6 +1565,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a47b24899bd20b4480e11cbcd84ca21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isResponding: 0
+  chatLogFilePath: 
 --- !u!1001 &83680912
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7564,6 +7566,7 @@ GameObject:
   - component: {fileID: 614527623}
   - component: {fileID: 614527622}
   - component: {fileID: 614527621}
+  - component: {fileID: 614527626}
   m_Layer: 0
   m_Name: XRBtns
   m_TagString: Untagged
@@ -7696,6 +7699,7 @@ MonoBehaviour:
   micRecorder: {fileID: 614527622}
   whisperTranscriber: {fileID: 1007842186}
   chatLoop: {fileID: 79125436}
+  isRecording: 0
 --- !u!114 &614527624
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7724,6 +7728,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &614527626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 614527620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a6d56516f4059943bfff4ab785a41e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputActionAsset: {fileID: -944628639613478452, guid: 21df8262bc0201942bfd3eb212f99515, type: 3}
+  chatLoop: {fileID: 79125436}
+  primaryBtnHold: {fileID: 614527623}
 --- !u!1 &622910358
 GameObject:
   m_ObjectHideFlags: 0

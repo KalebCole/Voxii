@@ -13,6 +13,44 @@ public static class AIVoice
         await SpeakPiper(msg);
     }
 
+    public static async Task SpeakRepeat()
+    {
+        GameObject aiVoiceObject = GameObject.Find("AIVoice");
+
+        if (aiVoiceObject == null)
+        {
+            Debug.LogError("GameObject 'AIVoice' not found in the scene.");
+            return;
+        }
+
+        AudioSource audioSource = aiVoiceObject.GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            audioSource = aiVoiceObject.AddComponent<AudioSource>();
+        }
+
+        await PlayDownloadedAudio(Path.Combine(Application.streamingAssetsPath, "Recordings", "repeat.wav"), audioSource, AudioType.WAV);
+    }
+
+    public static async Task SpeakInitialMsg()
+    {
+        GameObject aiVoiceObject = GameObject.Find("AIVoice");
+
+        if (aiVoiceObject == null)
+        {
+            Debug.LogError("GameObject 'AIVoice' not found in the scene.");
+            return;
+        }
+
+        AudioSource audioSource = aiVoiceObject.GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            audioSource = aiVoiceObject.AddComponent<AudioSource>();
+        }
+
+        await PlayDownloadedAudio(Path.Combine(Application.streamingAssetsPath, "Recordings", "initialAIMsg.wav"), audioSource, AudioType.WAV);
+    }
+
     private static async Task SpeakPiper(string msg)
     {
         // TODO: make piper return byte array directly and play it instead of saving it to a file

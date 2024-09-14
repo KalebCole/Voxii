@@ -4,6 +4,7 @@ using UnityEngine;
 using Newtonsoft.Json.Linq;
 using System.Threading.Tasks;
 using System.IO;
+using System.Text.RegularExpressions;
 
 public class ChatLoop : MonoBehaviour
 {
@@ -45,10 +46,13 @@ public class ChatLoop : MonoBehaviour
         }
     };
 
-    private void Start()
+    private async void Start()
     {
         chatLogFilePath = Path.Combine(Application.persistentDataPath, "chat_log.txt");
         ClearChatLog();
+        isResponding = true;
+        await AIVoice.SpeakInitialMsg();
+        isResponding = false;
     }
 
     private void ClearChatLog()
@@ -76,9 +80,33 @@ public class ChatLoop : MonoBehaviour
         chatHistory.RemoveAt(1);
     }
 
+    private string ParseAIMsg(string msg)
+    {
+        // remove anything within parentheses and parentheses itself
+        msg = Regex.Replace(msg, @"\s*\(.*?\)\s*", "");
+
+        // remove anything within asterisks and asterisks itself
+        msg = Regex.Replace(msg, @"\s*\*.*?\*\s*", "");
+
+        // get rid of any newlines too
+        msg = msg.Replace("\n", ". ");
+
+        msg = msg.Trim(' ', '"', '\'', '.');
+
+        return msg;
+    }
+
     public async Task SendUserMessage(string msg)
     {
         msg = msg.Trim(' ', '"', '\'');
+        if (msg == "")
+        {
+            isResponding = true;
+            await AIVoice.SpeakRepeat();
+            isResponding = false;
+            return;
+        }
+
         Debug.Log("Sending message: " + msg);
         JObject userMessage = new JObject { ["role"] = "user", ["content"] = msg };
 
@@ -103,15 +131,17 @@ public class ChatLoop : MonoBehaviour
             return;
         }
 
+        string contentStr = ParseAIMsg(content.ToString());
+
         JObject assistantMessage = new JObject
         {
             ["role"] = "assistant",
-            ["content"] = content
+            ["content"] = contentStr
         };
         chatHistory.Add(assistantMessage);
-        Debug.Log("Assistant: " + content);
+        Debug.Log("Assistant: " + contentStr);
 
-        await AIVoice.Speak(content.ToString());
+        await AIVoice.Speak(contentStr);
         isResponding = false;
     }
 }

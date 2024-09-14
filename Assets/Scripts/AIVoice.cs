@@ -8,6 +8,16 @@ public static class AIVoice
 {
     public static async Task Speak(string msg, bool download = false)
     {
+        await SpeakGoogle(msg, download);
+    }
+
+    private static async Task SpeakPiper(string msg)
+    {
+        // TODO: make piper return byte array directly and play it instead of saving it to a file
+    }
+
+    private static async Task SpeakGoogle(string msg, bool download)
+    {
         GameObject aiVoiceObject = GameObject.Find("AIVoice");
 
         if (aiVoiceObject == null)
@@ -106,7 +116,7 @@ public static class AIVoice
             {
                 audioSource.clip = DownloadHandlerAudioClip.GetContent(request);
                 audioSource.Play();
-                
+
                 // Wait until the audio has finished playing
                 while (audioSource.isPlaying)
                 {

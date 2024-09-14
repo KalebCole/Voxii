@@ -8,9 +8,9 @@ public class PrimaryBtnHold : MonoBehaviour
 
     public WhisperTranscriber whisperTranscriber;
     public ChatLoop chatLoop;
+    public bool isRecording = false;
 
     private InputAction primaryButton;
-    private bool isRecording = false;
 
     void OnEnable()
     {
@@ -37,18 +37,9 @@ public class PrimaryBtnHold : MonoBehaviour
 
     private void OnPress(InputAction.CallbackContext context)
     {
-        // Find the ChatLoop GameObject and get its ChatLoop component
-        var chatLoopGameObject = GameObject.Find("ChatLoop");
-        if (chatLoopGameObject == null)
-        {
-            Debug.LogError("ChatLoop GameObject not found!");
-            return;
-        }
-
-        var chatLoop = chatLoopGameObject.GetComponent<ChatLoop>();
         if (chatLoop == null)
         {
-            Debug.LogError("ChatLoop component not found on ChatLoop GameObject!");
+            Debug.LogError("ChatLoop component not found on GameObject!");
             return;
         }
 
@@ -58,6 +49,7 @@ public class PrimaryBtnHold : MonoBehaviour
             Debug.Log("Cannot record, AI is still responding.");
             return;
         }
+        
         if (!this.isRecording) // The performer event might be sent multiple times while holding down
         {
             chatLoop.isResponding = true;

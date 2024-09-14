@@ -65,8 +65,7 @@ public class ChatLoop : MonoBehaviour
 
     private void LogPlayerMessage(string message)
     {
-        // Append the message to the log file with a newline
-        File.AppendAllText(chatLogFilePath, message + "\n");
+        File.AppendAllText(chatLogFilePath, message.TrimStart());
     }
 
     private void TrimChatHistory(int maxMessages = 5)

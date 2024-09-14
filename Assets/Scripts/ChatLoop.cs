@@ -9,6 +9,7 @@ public class ChatLoop : MonoBehaviour
 {
     public GroqApiClient groqApi = new GroqApiClient();
     public bool isResponding = false;
+    public string chatLogFilePath;
 
     private static readonly string initialAIMessage = "Hello, welcome to our cafe. What can I get for you today?";
     private static readonly OnboardingData onboardingData = new OnboardingData();
@@ -43,7 +44,6 @@ public class ChatLoop : MonoBehaviour
             ["content"] = initialAIMessage
         }
     };
-    private string chatLogFilePath;
 
     private void Start()
     {
@@ -65,7 +65,7 @@ public class ChatLoop : MonoBehaviour
 
     private void LogPlayerMessage(string message)
     {
-        File.AppendAllText(chatLogFilePath, message.TrimStart());
+        File.AppendAllText(chatLogFilePath, message);
     }
 
     private void TrimChatHistory(int maxMessages = 5)
@@ -78,6 +78,7 @@ public class ChatLoop : MonoBehaviour
 
     public async Task SendUserMessage(string msg)
     {
+        msg = msg.Trim(' ', '"', '\'');
         Debug.Log("Sending message: " + msg);
         JObject userMessage = new JObject { ["role"] = "user", ["content"] = msg };
 

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Threading.Tasks;
 
 public class SecondaryBtnPress : MonoBehaviour
 {
@@ -32,6 +33,10 @@ public class SecondaryBtnPress : MonoBehaviour
 
     private void OnPress(InputAction.CallbackContext context)
     {
+        HandlePressAsync();
+    }
+    private async Task HandlePressAsync()
+    {
         if (chatLoop == null)
         {
             Debug.LogError("ChatLoop component not found on GameObject!");
@@ -51,6 +56,13 @@ public class SecondaryBtnPress : MonoBehaviour
             return;
         }
 
-        // TODO: call scorer here
+        Scorer scorer = new Scorer(chatLoop.chatLogFilePath);
+        var score = await scorer.GetScore();
+        if (score == null)
+        {
+            Debug.LogError("Error: score is null");
+            return;
+        }
+        Debug.Log(score);
     }
 }

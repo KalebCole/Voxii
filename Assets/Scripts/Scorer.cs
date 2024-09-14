@@ -1,11 +1,10 @@
 # nullable enable
 
-using UnityEngine;
 using Newtonsoft.Json.Linq;
 using System.Threading.Tasks;
 using System.IO;
 
-public class Scorer : MonoBehaviour
+public class Scorer
 {
     public GroqApiClient groqApi = new GroqApiClient();
 
@@ -16,16 +15,18 @@ public class Scorer : MonoBehaviour
     };
     private string chatLogFilePath;
 
-    private void Start()
+    public Scorer(string chatLogFilePath)
     {
-        chatLogFilePath = Path.Combine(Application.persistentDataPath, "chat_log.txt");
+        this.chatLogFilePath = chatLogFilePath;
     }
 
     private JArray GetUserMsgs()
     {
-        JArray userMsgs = new();
-
-        string chatLogFilePath = Application.persistentDataPath + "/chat_logs.txt";
+        // Initialize this with system prompt
+        JArray userMsgs = new JArray
+        {
+            systemPrompt
+        };
 
         if (File.Exists(chatLogFilePath))
         {
@@ -43,12 +44,17 @@ public class Scorer : MonoBehaviour
             }
         }
 
+        // userMsgs.Add(new JObject
+        // {
+        //     ["role"] = "user",
+        //     ["content"] = "Can you grade my english please?"
+        // });
+
         return userMsgs;
     }
 
-    public async Task OutputScore()
+    public async Task<string> GetScore()
     {
-
         JObject request = new JObject
         {
             ["model"] = "llama-3.1-8b-instant",
@@ -57,14 +63,12 @@ public class Scorer : MonoBehaviour
             ["temperature"] = 1.2
         };
 
+        // log the request
+        File.AppendAllText(chatLogFilePath, request.ToString());
+
         JObject? response = await groqApi.CreateChatCompletionAsync(request);
         var content = response?["choices"]?[0]?["message"]?["content"];
-        if (content == null)
-        {
-            Debug.LogError("Error: response content is null");
-            return;
-        }
 
-        Debug.Log("Scorer: " + content);
+        return content?.ToString();
     }
 }

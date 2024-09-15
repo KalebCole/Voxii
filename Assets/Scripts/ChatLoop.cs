@@ -70,9 +70,17 @@ public class ChatLoop : MonoBehaviour
         }
     }
 
-    private void LogPlayerMessage(string message)
+    private void LogMessage(string role, string message)
     {
-        File.AppendAllText(chatLogFilePath, message);
+        /// Ensure the message is trimmed and not empty
+        message = message.Trim();
+        if (string.IsNullOrEmpty(message))
+        {
+            Debug.LogWarning("Attempted to log an empty message.");
+            return;
+        }
+        string logEntry = $"{role}: {message}\n";
+        File.AppendAllText(chatLogFilePath, logEntry);
     }
 
     private void TrimChatHistory(int maxMessages = 5)
@@ -113,7 +121,7 @@ public class ChatLoop : MonoBehaviour
         Debug.Log("Sending message: " + msg);
         JObject userMessage = new JObject { ["role"] = "user", ["content"] = msg };
 
-        LogPlayerMessage(msg);
+        LogMessage("user", msg); ;
 
         TrimChatHistory();
         chatHistory.Add(userMessage);
@@ -142,6 +150,7 @@ public class ChatLoop : MonoBehaviour
             ["content"] = contentStr
         };
         chatHistory.Add(assistantMessage);
+        LogMessage("assistant", contentStr);
         Debug.Log("Assistant: " + contentStr);
 
         await AIVoice.Speak(contentStr);

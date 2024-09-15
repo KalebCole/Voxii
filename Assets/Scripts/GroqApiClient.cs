@@ -49,8 +49,11 @@ public class GroqApiClient
             {
                 return JObject.Parse(webRequest.downloadHandler.text);
             }
-            else
+            else if (webRequest.responseCode == 401)
             {
+                throw new Exception("Missing the API key! Get an api key at Groq and make a .env file!");
+            }
+            else{
                 throw new Exception($"Error: {webRequest.error}");
             }
         }

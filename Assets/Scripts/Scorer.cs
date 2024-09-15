@@ -1,18 +1,40 @@
 # nullable enable
 
+using UnityEngine;
 using Newtonsoft.Json.Linq;
 using System.Threading.Tasks;
 using System.IO;
+using System.Diagnostics;
+using System;
+using System.Linq;
 
 public class Scorer
 {
     public GroqApiClient groqApi = new GroqApiClient();
 
-    private static readonly JObject systemPrompt = new JObject
+    private JObject systemPrompt // this dynamically generates upon instantiation of the scorer class (so we can interpolate the chat log file)
     {
-        ["role"] = "system",
-        ["content"] = "As a proficient english grader. You will grade the english proficiency of the user and provide tips on how to improve their english. You will grade their english by analyzing the previous messages."
-    };
+        get
+        {
+            return new JObject
+            {
+                ["role"] = "system",
+                ["content"] = $@"
+                  You are proficient in the English Language 
+
+                        I want you to grade the user in a conversation between a user and an assistant based on the following criteria: 
+                        1. Number of errors in the user's grammar
+                        2. Analysis of the relevance of the user response to gauge if they understood what the assistant was asking
+
+                        Here is the conversation:
+                        
+
+                "
+            };
+        }
+    }
+    // 2. Average time for the response in seconds
+
     private string chatLogFilePath;
 
     public Scorer(string chatLogFilePath)
@@ -20,52 +42,60 @@ public class Scorer
         this.chatLogFilePath = chatLogFilePath;
     }
 
-    private JArray GetUserMsgs()
+    private JArray GetMsgs()
     {
         // Initialize this with system prompt
-        JArray userMsgs = new JArray
-        {
-            systemPrompt
-        };
+        JArray msgs = new JArray
+    {
+        systemPrompt
+    };
+        UnityEngine.Debug.Log("msgs with system prompt: " + msgs);
 
         if (File.Exists(chatLogFilePath))
         {
             string[] messages = File.ReadAllLines(chatLogFilePath);
-
-            foreach (string message in messages)
-            {
-                JObject userMessage = new()
-                {
-                    ["role"] = "user",
-                    ["content"] = message
-                };
-
-                userMsgs.Add(userMessage);
-            }
+            UnityEngine.Debug.Log("length: " + messages.Length);
+            string result = string.Join("\r\n", messages);
+            msgs[0]["content"] += result;
         }
-
-        // userMsgs.Add(new JObject
-        // {
-        //     ["role"] = "user",
-        //     ["content"] = "Can you grade my english please?"
-        // });
-
-        return userMsgs;
+        string expectedOutcome = @"
+        Output the grades as a string in this format:
+                        Number of errors: number,
+                        Accuracy of understanding and responding: number in the range of 0-10
+";
+// Average time for response: number (in seconds),
+        msgs[0]["content"] += expectedOutcome;
+        UnityEngine.Debug.Log("Msgs after: " + msgs);
+        return msgs;
     }
 
     public async Task<string> GetScore()
     {
-        JObject request = new JObject
+        try
         {
-            ["model"] = "llama-3.1-8b-instant",
-            ["messages"] = GetUserMsgs(),
-            ["max_tokens"] = 100,
-            ["temperature"] = 1.2
-        };
+            JObject request = new JObject
+            {
+                ["model"] = "llama-3.1-8b-instant",
+                ["messages"] = GetMsgs(),
+                ["max_tokens"] = 100,
+                ["temperature"] = 1.2
+            };
 
-        JObject? response = await groqApi.CreateChatCompletionAsync(request);
-        var content = response?["choices"]?[0]?["message"]?["content"];
+            UnityEngine.Debug.Log("Request: " + request);
+            JObject? response = await groqApi.CreateChatCompletionAsync(request);
+            UnityEngine.Debug.Log("after request sent");
 
-        return content?.ToString();
+            var content = response?["choices"]?[0]?["message"]?["content"];
+            UnityEngine.Debug.Log("content: " + content);
+
+            return content?.ToString() ?? string.Empty;
+        }
+        catch (Exception ex)
+        {
+            UnityEngine.Debug.LogError("Error during API call: " + ex.Message);
+            return string.Empty;
+        }
     }
 }
+
+

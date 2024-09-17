@@ -51,5 +51,6 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Voxii.sln"
+    "dotnet.defaultSolution": "Voxii.sln",
+    "dotnet.preferCSharpExtension": true
 }

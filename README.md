@@ -21,3 +21,26 @@ An immersive virtual reality language learning windows desktop application. By s
 Unity version - 2022.3.39f1
 
 SDK version - .NET Framework
+
+Note that only public methods are included here
+
+### XRInputActions.inputactions
+- Contains the mappings which map from the keyboard to the controller's controls
+
+### AIVoice.cs
+- Text to speech for the AI avatar
+
+- `Speak(string msg)`
+  - Asynchronously outputs AI speech for the given message using Piper TTS
+ 
+- `SpeakRepeat()`
+  - Asynchronously outputs the "Can you repeat that" message audio
+ 
+- `SpeakInitialMsg()`
+  - Asynchronously outputs the initial message for the specific avatar
+
+ ### ChatLoop.cs
+ - The user-avatar conversation loop
+
+ - `SendUserMessage(string msg)`
+   - Sends the given message to the AI avatar, adds it to the logs and chat history

@@ -27,8 +27,10 @@ Note that only public methods are included here
 ### XRInputActions.inputactions
 - Contains the mappings which map from the keyboard to the controller's controls
 
-### AIVoice.cs
+### AIVoice.cs (static class)
 - Text to speech for the AI avatar
+
+#### Methods
 
 - `static async Task Speak(string msg)`
   - Asynchronously outputs AI speech for the given message using Piper TTS
@@ -39,14 +41,27 @@ Note that only public methods are included here
 - `static async Task SpeakInitialMsg()`
   - Outputs the initial message for the specific avatar
 
- ### ChatLoop.cs
- - The user-avatar conversation loop
+### ChatLoop.cs
+- The user-avatar conversation loop
 
- - `async Task SendUserMessage(string msg)`
-   - Sends the given message to the AI avatar, adds it to the logs and chat history
+#### Public variables:
+- GroqApiClient groqApi
+- bool isResponding: Keeps track of whether the AI is responding
+- string chatLogFilePath: The file path for the chat logs
+
+#### Methods
+
+- `async Task SendUserMessage(string msg)`
+  - Sends the given message to the AI avatar, adds it to the logs and chat history
 
 ### GameController.cs
 - Handles game related logic
+
+#### Components
+- LoadingSymbolController loadingSymbolController
+- Button testButton
+
+#### Methods
 
 - `void StartLoading()`
   - Initializes the loading icon logic
@@ -54,24 +69,36 @@ Note that only public methods are included here
 ### LoadingSymbolController.cs
 - Handles the loading symbol logic
 
+#### Components
+- GameObject loadingSymbol
+
+#### Methods
+
 - `void ShowLoadingSymbol()`
   - Shows the loading symbol
  
 - `void HideLoadingSymbol()`
   - Hides the loading symbol
 
- ### GroqApiClient.cs
- - Handles the requests sent to Groq's llama3
+### GroqApiClient.cs
+- Handles the requests sent to Groq's llama3
 
- ` `GroqApiClient(string apiKey = "")`
-   - Initializes the groq api client with the API key
-   - If no API key is provided it will try searching for one in a `.env` file
+#### Methods
 
- - `async Task<JObject?> CreateChatCompletionAsync(JObject request)`
-   - The request to send to the AI, including the parameters and the chat history
+- `GroqApiClient(string apiKey = "")`
+  - Initializes the groq api client with the API key
+  - If no API key is provided it will try searching for one in a `.env` file
+
+- `async Task<JObject?> CreateChatCompletionAsync(JObject request)`
+  - The request to send to the AI, including the parameters and the chat history
 
 ### MicRecorder.cs
 - Handles recording through the microphone
+
+#### Components
+- GameObject loadingSymbol
+
+#### Methods
 
 - `void StartRecording()`
   - Starts recording the microphone
@@ -88,14 +115,38 @@ Note that only public methods are included here
 ### OnboardingData.cs
 - Data container class to hold onboarding data instances
 
+#### Public variables
+- string PersonName { get; set; }
+- string LanguageProficiency { get; set; }
+- string LanguageToLearn { get; set; }
+- List<string> PhrasesToWorkOn { get; set; }
+- string Scene { get; set; }
+- Dictionary<string, string> SceneToRole { get; set; }
+
 ### PrimaryBtnHold.cs
 - Logic for what should happen when the primary button is held
+
+#### Components
+- InputActionAsset inputActionAsset
+- MicRecorder micRecorder
+- WhisperTranscriber whisperTranscriber
+- ChatLoop chatLoop
+
+#### Public variables
+- bool isRecording: Tracks whether the application is recording
 
 ### SecondaryBtnPress.cs
 - Logic for what should happen when the secondary button is pressed
 
+#### Components
+- InputActionAsset inputActionAsset
+- ChatLoop chatLoop
+- PrimaryBtnHold primaryBtnHold
+
 ### SaveWavFile.cs (static class - WavUtility)
 - Contains logic to save an audio clip to a location in the `.wav` format
+
+#### Methods
 
 - `static byte[] FromAudioClip(AudioClip clip)`
   - Converts an audio clip into byte[]
@@ -106,6 +157,11 @@ Note that only public methods are included here
 ### Scorer.cs
 - Contains the AI scoring logic for the user's english
 
+#### Public variables
+- GroqApiClient groqApi
+
+#### Methods
+
 - `Scorer(string chatLogFilePath)`
   - Initializes the scorer with the chat logs of the conversation so far
  
@@ -114,6 +170,11 @@ Note that only public methods are included here
  
 ### WhisperTranscriber.cs
 - Contains the logic for transcribing the user's speech to text
+
+#### Components
+- TextMeshProUGUI displayText
+
+#### Methods
 
 - `async Task<string> TranscribeRecording()`
   - Gets the string for the user's speech stored in `recording.wav` in the application's persistent data path

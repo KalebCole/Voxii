@@ -12,9 +12,10 @@ An immersive virtual reality language learning windows desktop application. By s
 
 ## Getting started
 
-1. Launch the game and hold the controller's primary button to start speaking
-2. Listen to the response the AI gives, and continue conversing using step 1.
-3. Press the controller's secondary button to get feedback on the conversation so far
+1. Create an API key from [Groq](https://groq.com/) and paste it in a `.env` file at the root location, in the format: `GROQ_API_KEY=<YOUR_GROQ_API_KEY_HERE>`
+2. Launch the game and hold the controller's primary button to start speaking
+3. Listen to the response the AI gives, and continue conversing using step 1.
+4. Press the controller's secondary button to get feedback on the conversation so far
 
 ## Demo Video
 [![Watch the video](https://i.imgur.com/dn050iWl.png)](https://youtu.be/w4oMArZul2A)

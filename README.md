@@ -17,7 +17,7 @@ An immersive virtual reality language learning windows desktop application. By s
 3. Press the controller's secondary button to get feedback on the conversation so far
 
 ## Demo Video
-[![Watch the video](https://i.imgur.com/dn050iWl.png)](https://youtu.be/x2Y6ZbkWWMY)
+[![Watch the video](https://i.imgur.com/dn050iWl.png)](https://youtu.be/w4oMArZul2A)
 
 **Click the image to watch the demo video**
 

@@ -11,6 +11,7 @@ public class ChatLoop : MonoBehaviour
     public GroqApiClient groqApi = new GroqApiClient();
     public bool isResponding = false;
     public string chatLogFilePath;
+    public GameObject loadingSymbol;
 
     private static readonly string initialAIMessage = "Hello, welcome to our cafe. What can I get for you today?";
     //private static readonly OnboardingData onboardingData = new OnboardingData();
@@ -23,7 +24,6 @@ public class ChatLoop : MonoBehaviour
         Your conversation partner, has a language proficiency level of {MenuData.LanguageProficiency} out of 5 in english and wishes to practice the following phrases: {string.Join(", ", MenuData.OptionsSelected)}.
 
         You should have hostility level {MenuData.AvatarHostility} out of 5, where at 1 you are incredibly patient and kind, and at 5 you are impatient and less forgiving to the user.
-
         
         Respond naturally, staying fully in character as a {MenuData.getRole()}, and keep the conversation flowing while adapting to the user's proficiency level.
         Stay authentic to your role, ensuring the conversation feels real and immersive.
@@ -136,8 +136,13 @@ public class ChatLoop : MonoBehaviour
             ["temperature"] = 1.2
         };
 
+        SetLoadingSymbolVisibility(true);
+
         JObject? response = await groqApi.CreateChatCompletionAsync(request);
         var content = response?["choices"]?[0]?["message"]?["content"];
+
+        SetLoadingSymbolVisibility(false);
+
         if (content == null)
         {
             Debug.LogError("Error: response content is null");
@@ -157,5 +162,13 @@ public class ChatLoop : MonoBehaviour
 
         await AIVoice.Speak(contentStr);
         isResponding = false;
+    }
+
+    private void SetLoadingSymbolVisibility(bool isVisible)
+    {
+        if (loadingSymbol != null)
+        {
+            loadingSymbol.SetActive(isVisible);
+        }
     }
 }

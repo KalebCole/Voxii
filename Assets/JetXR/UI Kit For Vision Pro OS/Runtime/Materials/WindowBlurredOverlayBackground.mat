@@ -8,20 +8,25 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: WindowBlurredOverlayBackground
-  m_Shader: {fileID: 4800000, guid: e8e2ce442172ab8419146a80df3c9f91, type: 3}
+  m_Shader: {fileID: 4800000, guid: 7963018c727195a478e80973850baf17, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
-  m_InvalidKeywords: []
+  m_InvalidKeywords:
+  - IS_BLUR_ALPHA_MASKED
+  - IS_SPRITE_VISIBLE
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
+  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
     - _Background:
-        m_Texture: {fileID: 8900000, guid: dddadfcba258fc64a97bdb5dcdc4af03, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _FrameTex:
@@ -36,6 +41,9 @@ Material:
     m_Floats:
     - _BaseColorValue: 1
     - _ColorMask: 15
+    - _IsAlphaMasked: 1
+    - _IsSpriteVisible: 1
+    - _Radius: 1
     - _Stencil: 0
     - _StencilComp: 8
     - _StencilOp: 0
@@ -49,5 +57,6 @@ Material:
     - _FrameColor: {r: 1, g: 1, b: 1, a: 1}
     - _LightColor: {r: 0.36862746, g: 0.36862746, b: 0.36862746, a: 0.2980392}
     - _MultColor: {r: 1, g: 1, b: 1, a: 0.36078432}
+    - _OverlayColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _StaticColor: {r: 0.5, g: 0.5, b: 0.5, a: 0.9}
   m_BuildTextureStacks: []

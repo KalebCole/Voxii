@@ -23,16 +23,18 @@ using System.Threading.Tasks;
 /// **OR**
 /// await data.SaveAsync(); // If you want to quickly continue while saving the data in the background
 /// </summary>
-public class OnboardingData
+public class OnboardingData : MonoBehaviour
 {
     [JsonProperty]
     public string PersonName { get; set; }
     [JsonProperty]
-    public string LanguageProficiency { get; set; }
+    public int LanguageProficiency { get; set; }
+    [JsonProperty]
+    public int HostilityLevel { get; set; }
     [JsonProperty]
     public string LanguageToLearn { get; set; }
     [JsonProperty]
-    public List<string> PhrasesToWorkOn { get; set; }
+    public List<string> PhrasesToWorkOn { get; set; } = new List<string>();
     [JsonProperty]
     public string Scene { get; set; }
     [JsonProperty]
@@ -54,6 +56,8 @@ public class OnboardingData
 
         try
         {
+            // TODO : change back
+            /*
             if (File.Exists(filePath))
             {
                 string jsonStr = File.ReadAllText(filePath);
@@ -61,6 +65,8 @@ public class OnboardingData
             }
             else
             {
+            */
+            Debug.Log("Initilaising OnboardingData");
                 InitializeDefault();
 
                 if (!async)
@@ -71,7 +77,7 @@ public class OnboardingData
                 {
                     _ = SaveAsync(); // _ is used to ignore the Task object
                 }
-            }
+            //}
         }
         catch (System.Exception e)
         {
@@ -80,9 +86,15 @@ public class OnboardingData
         }
     }
 
+    void Awake()
+    {
+        DontDestroyOnLoad(gameObject); // Ensure OnboardingData persists across scenes
+    }
+
     public void InitializeDefault()
     {
-        LanguageProficiency = "Beginner";
+        Debug.Log("Inside Initilaising OnboardingData function");
+        LanguageProficiency = 1;
         LanguageToLearn = "English";
         PhrasesToWorkOn = new List<string> { "Greeting and Introduction", "Ordering Food and Drinks" };
         Scene = "Cafe";
@@ -94,7 +106,7 @@ public class OnboardingData
 
     // Intended to be used to update the data
     public void Update(
-        string languageProficiency = "Beginner",
+        int languageProficiency = 0,
         string languageToLearn = "English",
         List<string> phrasesToWorkOn = null,
         string scene = "Cafe",

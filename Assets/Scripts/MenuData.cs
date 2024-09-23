@@ -39,6 +39,18 @@ public static class MenuData
         }
     }
 
+    public static string getRole() // TODO: exapand for other scenes
+    {
+        if (SceneSelection == "Cafe")
+        {
+            return "barista";
+        }
+        else
+        {
+            return "worker";
+        }
+    }
+
     [System.Serializable]
     public class MenuDataModel
     {

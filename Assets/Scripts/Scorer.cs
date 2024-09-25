@@ -26,7 +26,11 @@ public class Scorer
                         1. Number of errors in the user's grammar
                         2. Analysis of the relevance of the user response to gauge if they understood what the assistant was asking
 
-                        Here is the conversation:
+                        Here is an example output:
+                        Number of errors: 2,
+                        Accuracy of understanding and responding: 8
+
+                        Here is the conversation that you will be grading:
                         
 
                 "
@@ -62,6 +66,8 @@ public class Scorer
         Output the grades as a string in this format:
                         Number of errors: number,
                         Accuracy of understanding and responding: number in the range of 0-10
+        Do not output any other text in the response. 
+        
 ";
 // Average time for response: number (in seconds),
         msgs[0]["content"] += expectedOutcome;
@@ -96,6 +102,7 @@ public class Scorer
             return string.Empty;
         }
     }
+
 }
 
 

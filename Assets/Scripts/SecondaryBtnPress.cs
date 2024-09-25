@@ -57,10 +57,10 @@ public class SecondaryBtnPress : MonoBehaviour
         }
 
         Scorer scorer = new Scorer(chatLoop.chatLogFilePath);
-        var score = await scorer.GetScore();
-        if (score == null)
+        var scoreString = await scorer.GetScore();
+        if (scoreString == null)
         {
-            Debug.LogError("Error: score is null");
+            Debug.LogError("Error: scoreString is null");
             return;
         }
         Debug.Log(score);

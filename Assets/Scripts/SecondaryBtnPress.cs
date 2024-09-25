@@ -63,6 +63,19 @@ public class SecondaryBtnPress : MonoBehaviour
             Debug.LogError("Error: scoreString is null");
             return;
         }
-        Debug.Log(score);
+        Debug.Log("Score before parsing: " + scoreString);
+
+        var scoreResult = ScoreResult.Parse(scoreString);
+        Debug.Log("Score after parsing: " + scoreResult.NumberOfErrors + ", " + scoreResult.Accuracy);
+
+        // send the score to the points system
+        var points = ScoringSystem.CalculatePoints(scoreResult);
+        Debug.Log("Points: " + points);
+
+        // TODO: display it to a UI element that will load at the end of the conversation
+        // right now, to see the score, you can check the console
+
+
+
     }
 }

@@ -81,7 +81,10 @@ public class ChatLoop : MonoBehaviour
             Debug.LogWarning("Attempted to log an empty message.");
             return;
         }
-        string logEntry = $"{role}: {message}\n";
+        // Get current time
+        var time = System.DateTime.Now.ToString("HH:mm:ss");
+        // Log with time
+        string logEntry = $"{time} {role}: {message}\n";
         File.AppendAllText(chatLogFilePath, logEntry);
     }
 

@@ -11,6 +11,9 @@ public class SecondaryBtnPress : MonoBehaviour
 
     private InputAction secondaryButton;
 
+    // Enable or disable mock data
+    public bool useMockData = true;
+
     void OnEnable()
     {
         // Get the primary button action from the XRButtonDebug script
@@ -56,7 +59,10 @@ public class SecondaryBtnPress : MonoBehaviour
             return;
         }
 
-        Scorer scorer = new Scorer(chatLoop.chatLogFilePath);
+        // Create the Scorer with mock mode based on the useMockData flag
+        Scorer scorer = new Scorer(chatLoop.chatLogFilePath, useMockData);
+
+        
         var scoreString = await scorer.GetScore();
         if (scoreString == null)
         {

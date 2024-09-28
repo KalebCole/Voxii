@@ -12,6 +12,13 @@ public class Scorer
 {
     public GroqApiClient groqApi = new GroqApiClient();
 
+    // Accept a 'useMock' parameter for the Scorer class to enable mock mode
+    public Scorer(string chatLogFilePath, bool useMockForScoring = false)
+    {
+        this.chatLogFilePath = chatLogFilePath;
+        groqApi = new GroqApiClient(useMockForScoring: useMockForScoring);
+    }
+
     private JObject systemPrompt // this dynamically generates upon instantiation of the scorer class (so we can interpolate the chat log file)
     {
         get
@@ -69,7 +76,7 @@ public class Scorer
         Do not output any other text in the response. 
         
 ";
-// Average time for response: number (in seconds),
+        // Average time for response: number (in seconds),
         msgs[0]["content"] += expectedOutcome;
         UnityEngine.Debug.Log("Msgs after: " + msgs);
         return msgs;

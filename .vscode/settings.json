@@ -51,6 +51,6 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Voxii.sln",
+    "dotnet.defaultSolution": "voxii-new-vr-language-app.sln",
     "dotnet.preferCSharpExtension": true
 }

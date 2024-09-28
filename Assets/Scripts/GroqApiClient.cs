@@ -15,11 +15,16 @@ public class GroqApiClient
     private const string BaseUrl = "https://api.groq.com/openai/v1";
     private const string ChatCompletionsEndpoint = "/chat/completions";
 
+    private bool _useMockForScoring;
+
     private string _apiKey;
 
-    public GroqApiClient(string apiKey = "")
+    // Add a 'useMock' parameter for mock mode
+    public GroqApiClient(string apiKey = "", bool useMockForScoring = false)
     {
-        if (apiKey == "" && !env.TryParseEnvironmentVariable("GROQ_API_KEY", out apiKey))
+        _useMockForScoring = useMockForScoring;
+
+        if (apiKey == "" && !useMockForScoring && !env.TryParseEnvironmentVariable("GROQ_API_KEY", out apiKey))
         {
             throw new Exception("API key not provided or error finding environment variable GROQ_API_KEY");
         }
@@ -28,6 +33,11 @@ public class GroqApiClient
 
     public async Task<JObject?> CreateChatCompletionAsync(JObject request)
     {
+        if (_useMockForScoring)
+        {
+            UnityEngine.Debug.Log("Mock API mode enabled.");
+            return await GetMockScore();
+        }
         string url = BaseUrl + ChatCompletionsEndpoint;
         string jsonData = request.ToString();  // Convert JObject to string
 
@@ -53,9 +63,28 @@ public class GroqApiClient
             {
                 throw new Exception("Missing the API key! Get an api key at Groq and make a .env file!");
             }
-            else{
+            else
+            {
                 throw new Exception($"Error: {webRequest.error}");
             }
         }
     }
+
+    private async Task<JObject?> GetMockScore()
+    {
+        // Simulating an API delay
+        await Task.Delay(1000);
+
+        // Return a mock response
+        return JObject.Parse(@"{
+            'choices': [
+                {
+                    'message': {
+                        'content': 'Number of errors: 2, Accuracy of understanding and responding: 8'
+                    }
+                }
+            ]
+        }");
+    }
+
 }

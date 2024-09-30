@@ -37,6 +37,11 @@ public class PrimaryBtnHold : MonoBehaviour
 
     private void OnPress(InputAction.CallbackContext context)
     {
+        if (chatLoop.msgsSent >= 10)
+        {
+            Debug.Log("Can't send more messages, limit reached.");
+            return;
+        }
         if (chatLoop == null)
         {
             Debug.LogError("ChatLoop component not found on GameObject!");
@@ -49,7 +54,7 @@ public class PrimaryBtnHold : MonoBehaviour
             Debug.Log("Cannot record, AI is still responding.");
             return;
         }
-        
+
         if (!this.isRecording) // The performer event might be sent multiple times while holding down
         {
             chatLoop.isResponding = true;
@@ -60,6 +65,11 @@ public class PrimaryBtnHold : MonoBehaviour
 
     private async void OnRelease(InputAction.CallbackContext context)
     {
+        if (chatLoop.msgsSent >= 10)
+        {
+            Debug.Log("It shouldn't go here but added for safety");
+            return;
+        }
         if (!this.isRecording)
         {
             return;
@@ -72,7 +82,6 @@ public class PrimaryBtnHold : MonoBehaviour
         string transcription = await whisperTranscriber.TranscribeRecording();
 
         Debug.Log("transcription in PrimaryBtnHold: " + transcription);
-
         await chatLoop.SendUserMessage(transcription);
     }
 }

@@ -12,6 +12,7 @@ public class ChatLoop : MonoBehaviour
     public bool isResponding = false;
     public string chatLogFilePath;
     public GameObject loadingSymbol;
+    public int msgsSent { get; private set; } = 0;
 
     private static readonly string initialAIMessage = "Hello, welcome to our cafe. What can I get for you today?";
     //private static readonly OnboardingData onboardingData = new OnboardingData();
@@ -166,6 +167,8 @@ public class ChatLoop : MonoBehaviour
 
         await AIVoice.Speak(contentStr);
         isResponding = false;
+
+        ++msgsSent;
     }
 
     private void SetLoadingSymbolVisibility(bool isVisible)

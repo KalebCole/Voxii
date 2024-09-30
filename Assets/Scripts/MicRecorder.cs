@@ -10,6 +10,7 @@ public class MicRecorder : MonoBehaviour
     private bool isRecording = false;
     private float recordingStartTime;
     private float recordingDuration; // The actual duration of the recorded audio
+    public float RecordingDuration => recordingDuration;
 
     void Start()
     {

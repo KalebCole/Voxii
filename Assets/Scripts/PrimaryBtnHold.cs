@@ -37,6 +37,11 @@ public class PrimaryBtnHold : MonoBehaviour
 
     private void OnPress(InputAction.CallbackContext context)
     {
+        if (chatLoop.msgsSent >= 10)
+        {
+            Debug.Log("Can't send more messages, limit reached.");
+            return;
+        }
         if (chatLoop == null)
         {
             Debug.LogError("ChatLoop component not found on GameObject!");
@@ -60,9 +65,9 @@ public class PrimaryBtnHold : MonoBehaviour
 
     private async void OnRelease(InputAction.CallbackContext context)
     {
-        if (chatLoop.msgsSent == 10)
+        if (chatLoop.msgsSent >= 10)
         {
-            Debug.Log("Can't send more messages, limit reached.");
+            Debug.Log("It shouldn't go here but added for safety");
             return;
         }
         if (!this.isRecording)

@@ -49,7 +49,7 @@ public class PrimaryBtnHold : MonoBehaviour
             Debug.Log("Cannot record, AI is still responding.");
             return;
         }
-        
+
         if (!this.isRecording) // The performer event might be sent multiple times while holding down
         {
             chatLoop.isResponding = true;
@@ -73,6 +73,13 @@ public class PrimaryBtnHold : MonoBehaviour
 
         Debug.Log("transcription in PrimaryBtnHold: " + transcription);
 
-        await chatLoop.SendUserMessage(transcription);
+        if (chatLoop.msgsSent == 10)
+        {
+            Debug.Log("Can't send more messages, limit reached.");
+        }
+        else
+        {
+            await chatLoop.SendUserMessage(transcription);
+        }
     }
 }

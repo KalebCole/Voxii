@@ -12,7 +12,7 @@ public class SecondaryBtnPress : MonoBehaviour
     private InputAction secondaryButton;
 
     // Enable or disable mock data
-    public bool useMockData = true;
+    private bool useMockData = false;
 
     void OnEnable()
     {
@@ -62,7 +62,7 @@ public class SecondaryBtnPress : MonoBehaviour
         // Create the Scorer with mock mode based on the useMockData flag
         Scorer scorer = new Scorer(chatLoop.chatLogFilePath, useMockData);
 
-        
+
         var scoreString = await scorer.GetScore();
         if (scoreString == null)
         {

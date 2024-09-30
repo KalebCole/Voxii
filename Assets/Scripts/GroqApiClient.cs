@@ -15,6 +15,7 @@ public class GroqApiClient
     private const string BaseUrl = "https://api.groq.com/openai/v1";
     private const string ChatCompletionsEndpoint = "/chat/completions";
 
+    // (called in SecondaryBtnPress)
     private bool _useMockForScoring;
 
     private string _apiKey;
@@ -33,6 +34,7 @@ public class GroqApiClient
 
     public async Task<JObject?> CreateChatCompletionAsync(JObject request)
     {
+        Debug.Log("mock mode in CreateChatCompletionAsync: " + _useMockForScoring);
         if (_useMockForScoring)
         {
             UnityEngine.Debug.Log("Mock API mode enabled.");

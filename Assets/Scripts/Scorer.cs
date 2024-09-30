@@ -12,7 +12,7 @@ public class Scorer
 {
     public GroqApiClient groqApi = new GroqApiClient();
 
-    // Accept a 'useMock' parameter for the Scorer class to enable mock mode
+    // Accept a 'useMock' parameter for the Scorer class to enable mock mode (called in SecondaryBtnPress)
     public Scorer(string chatLogFilePath, bool useMockForScoring = false)
     {
         this.chatLogFilePath = chatLogFilePath;

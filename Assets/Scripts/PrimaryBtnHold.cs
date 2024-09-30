@@ -60,6 +60,11 @@ public class PrimaryBtnHold : MonoBehaviour
 
     private async void OnRelease(InputAction.CallbackContext context)
     {
+        if (chatLoop.msgsSent == 10)
+        {
+            Debug.Log("Can't send more messages, limit reached.");
+            return;
+        }
         if (!this.isRecording)
         {
             return;
@@ -72,14 +77,6 @@ public class PrimaryBtnHold : MonoBehaviour
         string transcription = await whisperTranscriber.TranscribeRecording();
 
         Debug.Log("transcription in PrimaryBtnHold: " + transcription);
-
-        if (chatLoop.msgsSent == 10)
-        {
-            Debug.Log("Can't send more messages, limit reached.");
-        }
-        else
-        {
-            await chatLoop.SendUserMessage(transcription);
-        }
+        await chatLoop.SendUserMessage(transcription);
     }
 }

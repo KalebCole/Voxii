@@ -53,6 +53,7 @@ public class ChatLoop : MonoBehaviour
 
     private async void Start()
     {
+        Debug.Log("Avatar Hostility:" + MenuData.AvatarHostility);
         chatLogFilePath = Path.Combine(Application.persistentDataPath, "chat_log.txt");
         ClearChatLog();
         isResponding = true;

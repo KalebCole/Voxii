@@ -9,7 +9,12 @@ public static class MenuData
     public static float LanguageProficiency = 0.5f;
     public static float AvatarHostility = 0.5f;
 
-    private static string filePath = Application.persistentDataPath + "/menuData.json";
+    private static string filePath;
+
+    public static void SetFilePath(string appDataPath)
+    {
+        filePath = appDataPath + "/menuData.json";
+    }
 
     public static void SaveDataToJson()
     {

@@ -105,7 +105,7 @@ public class OnboardingData : MonoBehaviour
     }
 
     // Intended to be used to update the data
-    public void Update(
+    public void UpdateParams(
         int languageProficiency = 0,
         string languageToLearn = "English",
         List<string> phrasesToWorkOn = null,

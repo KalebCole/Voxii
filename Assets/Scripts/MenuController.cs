@@ -13,6 +13,9 @@ public class MenuController : MonoBehaviour
 
     void Start()
     {
+        // Initialize
+        MenuData.SetFilePath(Application.persistentDataPath);
+
         // Load previously saved data (if it exists)
         MenuData.LoadDataFromJson();
 

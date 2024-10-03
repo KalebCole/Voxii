@@ -57,7 +57,7 @@ public class PrimaryBtnHold : MonoBehaviour
 
         if (!this.isRecording) // The performer event might be sent multiple times while holding down
         {
-            chatLoop.isResponding = true;
+            chatLoop.setIsResponding(true);
             this.isRecording = true;
             micRecorder.StartRecording();
         }

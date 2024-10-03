@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 
 public class ChatLoop : MonoBehaviour
 {
+    public Animator animator;
     public GroqApiClient groqApi = new GroqApiClient();
     public bool isResponding = false;
     public string chatLogFilePath;
@@ -52,14 +53,22 @@ public class ChatLoop : MonoBehaviour
         }
     };
 
+    public void setIsResponding(bool value)
+    {
+        isResponding = value;
+        animator.SetBool("isResponding", value);
+
+        Debug.Log("isResponding: " + isResponding);
+    }
+
     private async void Start()
     {
         Debug.Log("Avatar Hostility:" + MenuData.AvatarHostility);
         chatLogFilePath = Path.Combine(Application.persistentDataPath, "chat_log.txt");
         ClearChatLog();
-        isResponding = true;
+        setIsResponding(true);
         await AIVoice.SpeakInitialMsg();
-        isResponding = false;
+        setIsResponding(false);
     }
 
     private void ClearChatLog()
@@ -119,9 +128,9 @@ public class ChatLoop : MonoBehaviour
         msg = msg.Trim(' ', '"', '\'');
         if (msg == "")
         {
-            isResponding = true;
+            setIsResponding(true);
             await AIVoice.SpeakRepeat();
-            isResponding = false;
+            setIsResponding(false);
             return;
         }
 
@@ -166,7 +175,7 @@ public class ChatLoop : MonoBehaviour
         Debug.Log("Assistant: " + contentStr);
 
         await AIVoice.Speak(contentStr);
-        isResponding = false;
+        setIsResponding(false);
 
         ++msgsSent;
     }

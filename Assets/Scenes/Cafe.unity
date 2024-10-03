@@ -1370,6 +1370,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a47b24899bd20b4480e11cbcd84ca21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 1795649126}
   isResponding: 0
   chatLogFilePath: 
   loadingSymbol: {fileID: 507714847}

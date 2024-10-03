@@ -57,8 +57,6 @@ public class ChatLoop : MonoBehaviour
     {
         isResponding = value;
         animator.SetBool("isResponding", value);
-
-        Debug.Log("isResponding: " + isResponding);
     }
 
     private async void Start()
@@ -69,6 +67,12 @@ public class ChatLoop : MonoBehaviour
         setIsResponding(true);
         await AIVoice.SpeakInitialMsg();
         setIsResponding(false);
+    }
+
+    private void Update()
+    {
+
+        animator.SetInteger("speakingIdx", Random.Range(0, 3));
     }
 
     private void ClearChatLog()

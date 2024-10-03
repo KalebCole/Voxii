@@ -38,6 +38,7 @@ public class SecondaryBtnPress : MonoBehaviour
     {
         HandlePressAsync();
     }
+
     private async Task HandlePressAsync()
     {
         if (chatLoop == null)
@@ -62,7 +63,6 @@ public class SecondaryBtnPress : MonoBehaviour
         // Create the Scorer with mock mode based on the useMockData flag
         Scorer scorer = new Scorer(chatLoop.chatLogFilePath, useMockData);
 
-
         var scoreString = await scorer.GetScore();
         if (scoreString == null)
         {
@@ -78,10 +78,7 @@ public class SecondaryBtnPress : MonoBehaviour
         var points = ScoringSystem.CalculatePoints(scoreResult);
         Debug.Log("Points: " + points);
 
-        // TODO: display it to a UI element that will load at the end of the conversation
-        // right now, to see the score, you can check the console
-
-
-
+        // TODO: display it to a UI element that will pop up as soon as you click the secondary button, and wait until the score is calculated (through loading circle), then displayed
+        // Then the user can exit out of it and continue with the conversation
     }
 }

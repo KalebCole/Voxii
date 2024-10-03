@@ -20819,6 +20819,63 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 400006, guid: 0957c44b78442450698ef9b9265ad869, type: 3}
   m_PrefabInstance: {fileID: 1629238991}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1631320623
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1631320625}
+  - component: {fileID: 1631320624}
+  m_Layer: 0
+  m_Name: SentimentAnalysis
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1631320624
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1631320623}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fad379cc4debb1a499f5602b58c06cc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PositiveWordsFileText: 
+  NegativeWordsFileText: 
+  ContractionWordsFileText: 
+  StopWordsFileText: 
+  PositiveWords: []
+  PositiveWeights: []
+  NegativeWords: []
+  NegativeWeights: []
+  ContractionWords: []
+  StopWords: []
+  Values: []
+  initialized: 0
+  SentimentValue: 0.5
+--- !u!4 &1631320625
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1631320623}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.1796631, y: 3.4230263, z: -1.8723279}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1631848331
 GameObject:
   m_ObjectHideFlags: 0
@@ -33461,3 +33518,4 @@ SceneRoots:
   - {fileID: 79125435}
   - {fileID: 1646050710}
   - {fileID: 1580992982}
+  - {fileID: 1631320625}

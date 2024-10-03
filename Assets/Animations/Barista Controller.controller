@@ -11,9 +11,6 @@ AnimatorStateTransition:
   - m_ConditionMode: 2
     m_ConditionEvent: happy
     m_EventTreshold: 0
-  - m_ConditionMode: 2
-    m_ConditionEvent: sad
-    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -3909573044500078899}
   m_Solo: 0
@@ -109,7 +106,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 6
-    m_ConditionEvent: sadIdx
+    m_ConditionEvent: emotionIdx
     m_EventTreshold: 1
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -4043786969629816247}
@@ -186,10 +183,10 @@ AnimatorStateMachine:
     m_Position: {x: 260, y: 420, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -3932422186595299777}
-    m_Position: {x: 580, y: 430, z: 0}
+    m_Position: {x: 560, y: 450, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -8230339345729925964}
-    m_Position: {x: 590, y: 540, z: 0}
+    m_Position: {x: 480, y: 580, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 6990656783920052227}
     m_Position: {x: 910, y: 360, z: 0}
@@ -297,8 +294,8 @@ AnimatorStateTransition:
   m_PrefabAsset: {fileID: 0}
   m_Name: 
   m_Conditions:
-  - m_ConditionMode: 1
-    m_ConditionEvent: sad
+  - m_ConditionMode: 2
+    m_ConditionEvent: happy
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -8230339345729925964}
@@ -544,7 +541,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 6
-    m_ConditionEvent: happyIdx
+    m_ConditionEvent: emotionIdx
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 6990656783920052227}
@@ -569,7 +566,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 6
-    m_ConditionEvent: sadIdx
+    m_ConditionEvent: emotionIdx
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1573527127931717034}
@@ -594,7 +591,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 6
-    m_ConditionEvent: happyIdx
+    m_ConditionEvent: emotionIdx
     m_EventTreshold: 1
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 4519988022685606294}
@@ -692,19 +689,7 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
-  - m_Name: sad
-    m_Type: 4
-    m_DefaultFloat: 0
-    m_DefaultInt: 0
-    m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
-  - m_Name: sadIdx
-    m_Type: 3
-    m_DefaultFloat: 0
-    m_DefaultInt: 0
-    m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
-  - m_Name: happyIdx
+  - m_Name: emotionIdx
     m_Type: 3
     m_DefaultFloat: 0
     m_DefaultInt: 0

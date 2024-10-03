@@ -73,6 +73,7 @@ public class ChatLoop : MonoBehaviour
     {
 
         animator.SetInteger("speakingIdx", Random.Range(0, 3));
+        animator.SetInteger("emotionIdx", Random.Range(0, 1));
     }
 
     private void ClearChatLog()
@@ -178,10 +179,21 @@ public class ChatLoop : MonoBehaviour
         LogMessage("assistant", contentStr);
         Debug.Log("Assistant: " + contentStr);
 
+        bool sentiment = GetSentiment(contentStr);
+
+        animator.SetBool("happy", sentiment);
+
         await AIVoice.Speak(contentStr);
         setIsResponding(false);
 
         ++msgsSent;
+    }
+
+    private bool GetSentiment(string msg)
+    {
+        // randomly return a sentiment
+        // True is happy
+        return Random.value > 0.5f;
     }
 
     private void SetLoadingSymbolVisibility(bool isVisible)

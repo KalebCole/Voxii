@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 
 public class ChatLoop : MonoBehaviour
 {
+    public Animator animator;
     public GroqApiClient groqApi = new GroqApiClient();
     public bool isResponding = false;
     public string chatLogFilePath;
@@ -52,14 +53,27 @@ public class ChatLoop : MonoBehaviour
         }
     };
 
+    public void setIsResponding(bool value)
+    {
+        isResponding = value;
+        animator.SetBool("isResponding", value);
+    }
+
     private async void Start()
     {
         Debug.Log("Avatar Hostility:" + MenuData.AvatarHostility);
         chatLogFilePath = Path.Combine(Application.persistentDataPath, "chat_log.txt");
         ClearChatLog();
-        isResponding = true;
+        setIsResponding(true);
         await AIVoice.SpeakInitialMsg();
-        isResponding = false;
+        setIsResponding(false);
+    }
+
+    private void Update()
+    {
+
+        animator.SetInteger("speakingIdx", Random.Range(0, 3));
+        animator.SetInteger("emotionIdx", Random.Range(0, 1));
     }
 
     private void ClearChatLog()
@@ -119,9 +133,9 @@ public class ChatLoop : MonoBehaviour
         msg = msg.Trim(' ', '"', '\'');
         if (msg == "")
         {
-            isResponding = true;
+            setIsResponding(true);
             await AIVoice.SpeakRepeat();
-            isResponding = false;
+            setIsResponding(false);
             return;
         }
 
@@ -165,10 +179,21 @@ public class ChatLoop : MonoBehaviour
         LogMessage("assistant", contentStr);
         Debug.Log("Assistant: " + contentStr);
 
+        bool sentiment = GetSentiment(contentStr);
+
+        animator.SetBool("happy", sentiment);
+
         await AIVoice.Speak(contentStr);
-        isResponding = false;
+        setIsResponding(false);
 
         ++msgsSent;
+    }
+
+    private bool GetSentiment(string msg)
+    {
+        // randomly return a sentiment
+        // True is happy
+        return Random.value > 0.5f;
     }
 
     private void SetLoadingSymbolVisibility(bool isVisible)

@@ -1,13 +1,19 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class FeedbackScreenController : MonoBehaviour
 {
-    public GameObject screen1;  // Assign Screen 1 panel in the Inspector
-    public GameObject screen2;  // Assign Screen 2 panel in the Inspector
-    public Button nextButton;   // Assign the "Next" button in the Inspector
-    public Button doneButton;   // Assign the "Done" button in the Inspector
+    public GameObject screen1;
+    public GameObject screen2;
+    public Button nextButton;
+    public Button doneButton;
+    public TextMeshProUGUI pointValue;
+    public TextMeshProUGUI grammarErrorValue;
+    public TextMeshProUGUI responseTimeValue;
+    public TextMeshProUGUI relevanceValue;
+    public TextMeshProUGUI feedbackPoint;
 
     void Start()
     {
@@ -15,20 +21,23 @@ public class FeedbackScreenController : MonoBehaviour
         screen1.SetActive(true);
         screen2.SetActive(false);
 
-        // Attach the button event listeners
-        nextButton.onClick.AddListener(ShowSecondScreen);
-        doneButton.onClick.AddListener(ChangeToMenuScene);
+        // Initalise the text values
+        pointValue.text = ResultsData.points.ToString(); ;
+        grammarErrorValue.text = ResultsData.errors.ToString();
+        responseTimeValue.text = "3" + "%";//ResultsData..ToString();
+        relevanceValue.text = ResultsData.relevanceScore.ToString() + "%";
+        feedbackPoint.text = "t";//ResultsData.feedback.ToString();
     }
 
     // Show Screen 2 and hide Screen 1
-    void ShowSecondScreen()
+    public void ShowSecondScreen()
     {
         screen1.SetActive(false);
         screen2.SetActive(true);
     }
 
     // Change to the menu scene when the Done button is pressed
-    void ChangeToMenuScene()
+    public void ChangeToMenuScene()
     {
         SceneManager.LoadScene("Menu");
     }

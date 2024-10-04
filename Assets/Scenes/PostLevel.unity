@@ -335,7 +335,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &217701648
 Transform:
   m_ObjectHideFlags: 0
@@ -387,9 +387,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1745074321}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 97.33334, y: -98}
   m_SizeDelta: {x: 150, y: 36}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &286902919
@@ -755,7 +755,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 395870479}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1251328979}
+        m_TargetAssemblyTypeName: FeedbackScreenController, Assembly-CSharp
+        m_MethodName: ShowSecondScreen
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &395870479
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2095,9 +2107,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1745074321}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 97.33334, y: -45}
   m_SizeDelta: {x: 150, y: 90}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1022195579
@@ -2711,23 +2723,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 1251328973}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 756e154b3812b420897c9d5f0138139d, type: 3}
+  m_Script: {fileID: 11500000, guid: bd444783199954529bed4aed1999ff56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  optionToggles:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  sceneToggles:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  languageProficiencySlider: {fileID: 0}
-  avatarHostilitySlider: {fileID: 0}
-  doneButton: {fileID: 2047720731}
+  screen1: {fileID: 217701647}
+  screen2: {fileID: 755204232}
+  nextButton: {fileID: 0}
+  doneButton: {fileID: 0}
+  pointValue: {fileID: 1022195579}
+  grammarErrorValue: {fileID: 1801079339}
+  responseTimeValue: {fileID: 1411835105}
+  relevanceValue: {fileID: 1309411782}
+  feedbackPoint: {fileID: 1800432728}
 --- !u!1 &1309411780
 GameObject:
   m_ObjectHideFlags: 0
@@ -3953,7 +3960,7 @@ GameObject:
   - component: {fileID: 1800432729}
   - component: {fileID: 1800432728}
   m_Layer: 5
-  m_Name: text
+  m_Name: feedbackPointValue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4401,7 +4408,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2047720732}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1251328979}
+        m_TargetAssemblyTypeName: FeedbackScreenController, Assembly-CSharp
+        m_MethodName: ChangeToMenuScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2047720732
 MonoBehaviour:
   m_ObjectHideFlags: 0

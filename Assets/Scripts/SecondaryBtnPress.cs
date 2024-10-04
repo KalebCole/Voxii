@@ -78,9 +78,14 @@ public class SecondaryBtnPress : MonoBehaviour
         var points = ScoringSystem.CalculatePoints(scoreResult);
         Debug.Log("Points: " + points);
 
-        // TODO: display it to a UI element that will load at the end of the conversation
-        // right now, to see the score, you can check the console
+        // Save to static data class to be access by results UI
+        ResultsData.points = points;
+        ResultsData.errors = scoreResult.NumberOfErrors;
+        ResultsData.relevanceScore = scoreResult.Accuracy;
 
+        // TODO: response time and feedback point
+        //ResultsData.feedback = scoreResult.;
+        //ResultsData.feedback = scoreResult.;
 
 
     }

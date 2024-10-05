@@ -156,6 +156,258 @@ public class Scorer
         }
     }
 
+    // Parse the score string to extract the number of errors and accuracy
+    public ScoreResult ParseScoreNumbers(string scoreString)
+    {
+        var result = new ScoreResult();
+
+        var errorsMatch = Regex.Match(scoreString, @"Number of errors:\s*(\d+)");
+        var accuracyMatch = Regex.Match(scoreString, @"Accuracy of understanding and responding:\s*(\d+)");
+        // var timeMatch = Regex.Match(scoreString, @"Average time for response:\s*([\d\.]+)");
+
+        if (errorsMatch.Success)
+            result.NumberOfErrors = int.Parse(errorsMatch.Groups[1].Value);
+
+        if (accuracyMatch.Success)
+            result.Accuracy = int.Parse(accuracyMatch.Groups[1].Value);
+
+        // if (timeMatch.Success)
+        //     result.AverageResponseTime = float.Parse(timeMatch.Groups[1].Value);
+
+        //debug
+        UnityEngine.Debug.Log("Number of errors: " + result.NumberOfErrors);
+        UnityEngine.Debug.Log("Accuracy: " + result.Accuracy);
+        // UnityEngine.Debug.Log("Average response time: " + result.AverageResponseTime);
+        return result;
+    }
+
+    // Parse the sentiment from the AI response
+    public SentimentResult ParseSentiment(string scoreString)
+    {
+        var result = new SentimentResult();
+
+        var sentimentMatch = Regex.Match(scoreString, @"Sentiment:\s*(\w+)");
+        if (sentimentMatch.Success)
+            result.Sentiment = sentimentMatch.Groups[1].Value;
+
+        // debug
+        UnityEngine.Debug.Log("Sentiment: " + result.Sentiment);
+
+        return result;
+    }
+
+    // Parse the error examples from the AI response
+    public List<ErrorExample> ParseErrorExamples(string scoreString)
+    {
+        var errorExamples = new List<ErrorExample>();
+
+        var errorMatch = Regex.Match(scoreString, @"Error Examples:(.*)Accuracy of understanding and responding:", RegexOptions.Singleline);
+        if (errorMatch.Success)
+        {
+            var errorList = errorMatch.Groups[1].Value;
+            var errorLines = errorList.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+
+            for (int i = 0; i < errorLines.Length; i += 4)
+            {
+                var error = new ErrorExample
+                {
+                    Category = errorLines[i].Trim(),
+                    Incorrect = errorLines[i + 1].Trim(),
+                    Corrected = errorLines[i + 2].Trim(),
+                    Reasoning = errorLines[i + 3].Trim()
+                };
+                errorExamples.Add(error);
+            }
+        }
+
+        // debug
+        UnityEngine.Debug.Log("Error Examples:");
+        foreach (var error in errorExamples)
+        {
+            UnityEngine.Debug.Log(error.Category);
+            UnityEngine.Debug.Log(error.Incorrect);
+            UnityEngine.Debug.Log(error.Corrected);
+            UnityEngine.Debug.Log(error.Reasoning);
+        }
+        return errorExamples;
+    }
+
+    // Calculate the time taken for the user to respond to the AI
+    public float CalculateResponseTime(string chatLogFilePath)
+    {
+        // debug
+        UnityEngine.Debug.Log("Calculating response time...");
+
+        float responseTime = 0;
+        if (File.Exists(chatLogFilePath))
+        {
+            string[] messages = File.ReadAllLines(chatLogFilePath);
+            if (messages.Length >= 2)
+            {
+                string[] lastMessage = messages[messages.Length - 2].Split(' ');
+                string[] currentTime = messages[messages.Length - 1].Split(' ');
+                if (lastMessage.Length >= 2 && currentTime.Length >= 2)
+                {
+                    string lastTime = lastMessage[0];
+                    string currentTimeStr = currentTime[0];
+                    if (TimeSpan.TryParse(lastTime, out TimeSpan lastTimeSpan) && TimeSpan.TryParse(currentTimeStr, out TimeSpan currentTimeSpan))
+                    {
+                        // debug
+                        responseTime = (float)(currentTimeSpan - lastTimeSpan).TotalSeconds;
+                        UnityEngine.Debug.Log("Response time: " + responseTime);
+                        return responseTime;
+                    }
+                }
+            }
+        }
+        // debug
+        UnityEngine.Debug.Log("Response time: " + responseTime);
+        return responseTime;
+    }
+
+    // Calculate the points based on the score result
+    public static int CalculatePoints(ScoreResult scoreResult, float responseTime)
+    {
+        UnityEngine.Debug.Log("Calculating points...");
+
+        int points = 0;
+
+
+        // Points for number of errors
+        switch (scoreResult.NumberOfErrors)
+        {
+            case 0:
+                points += 100;
+                break;
+            case 1:
+                points += 80;
+                break;
+            case 2:
+                points += 60;
+                break;
+            case 3:
+                points += 40;
+                break;
+            case 4:
+                points += 20;
+                break;
+            case 5:
+                points += 10;
+                break;
+            default:
+                points += 0;
+                break;
+        }
+
+        // Points for accuracy
+        switch (scoreResult.Accuracy)
+        {
+            case 0:
+                points += 0;
+                break;
+            case 1:
+                points += 10;
+                break;
+            case 2:
+                points += 20;
+                break;
+            case 3:
+                points += 30;
+                break;
+            case 4:
+                points += 40;
+                break;
+            case 5:
+                points += 50;
+                break;
+            case 6:
+                points += 60;
+                break;
+            case 7:
+                points += 70;
+                break;
+            case 8:
+                points += 80;
+                break;
+            case 9:
+                points += 90;
+                break;
+            case 10:
+                points += 100;
+                break;
+            default:
+                points += 0;
+                break;
+        }
+
+        // Points for response time
+        if (responseTime <= 5)
+        {
+            points += 100;
+        }
+        else if (responseTime <= 10)
+        {
+            points += 80;
+        }
+        else if (responseTime <= 15)
+        {
+            points += 60;
+        }
+        else if (responseTime <= 20)
+        {
+            points += 40;
+        }
+        else if (responseTime <= 25)
+        {
+            points += 20;
+        }
+        else if (responseTime <= 30)
+        {
+            points += 10;
+        }
+        else
+        {
+            points += 0;
+        }
+
+        // debug
+        UnityEngine.Debug.Log("Points: " + points);
+
+
+        return points;
+    }
+
+    // Step by step calculation of points
+    public async Task<int> CalculatePointsAsync()
+    {
+        var messages = GetMsgs();
+        var scoreString = await GetResponseOutput(messages);
+        var scoreResult = ParseScoreNumbers(scoreString);
+        var responseTime = CalculateResponseTime(chatLogFilePath);
+        return CalculatePoints(scoreResult, responseTime);
+    }
+
+}
+
+public class ScoreResult
+{
+    public int NumberOfErrors { get; set; }
+    public int Accuracy { get; set; }
+    // public float AverageResponseTime { get; set; }
+}
+
+// sentiment result class
+public class SentimentResult
+{
+    public string Sentiment { get; set; }
 }
 
 
+// error example class
+public class ErrorExample
+{
+    public string Category { get; set; }
+    public string Incorrect { get; set; }
+    public string Corrected { get; set; }
+    public string Reasoning { get; set; }
+}

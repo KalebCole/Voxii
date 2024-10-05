@@ -7,6 +7,8 @@ using System.IO;
 using System.Diagnostics;
 using System;
 using System.Linq;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 public class Scorer
 {
@@ -14,13 +16,7 @@ public class Scorer
 
     private string[] commonGramaticalErrorsInSpeech = new string[] { "Subject-Verb Agreement", "Verb Conjugation", "Sentence Structure" };
 
-    // Accept a 'useMock' parameter for the Scorer class to enable mock mode (called in SecondaryBtnPress)
-    public Scorer(string chatLogFilePath, bool useMockForScoring = false)
-    {
-        this.chatLogFilePath = chatLogFilePath;
-        groqApi = new GroqApiClient(useMockForScoring: useMockForScoring);
-    }
-
+    // TODO: improve the error calcuation by accounting for relevance and depth of understanding in the user's responses
     private JObject systemPrompt // this dynamically generates upon instantiation of the scorer class (so we can interpolate the chat log file)
     {
         get
@@ -76,15 +72,25 @@ public class Scorer
             };
         }
     }
-    // 2. Average time for the response in seconds
+
 
     private string chatLogFilePath;
 
     public Scorer(string chatLogFilePath)
     {
         this.chatLogFilePath = chatLogFilePath;
+        groqApi = new GroqApiClient(useMockForScoring: false);
     }
 
+    // Accept a 'useMock' parameter for the Scorer class to enable mock mode (called in SecondaryBtnPress)
+    public Scorer(string chatLogFilePath, bool useMockForScoring = false)
+    {
+        this.chatLogFilePath = chatLogFilePath;
+        groqApi = new GroqApiClient(useMockForScoring: useMockForScoring);
+    }
+
+    // Get the messages between the user and AI avatar from the chat log file and append the system prompt
+    // also appends the expected outcome to the chat log
     private JArray GetMsgs()
     {
         // Initialize this with system prompt
@@ -128,7 +134,8 @@ public class Scorer
         return msgs;
     }
 
-    public async Task<string> GetScore()
+    // Get the response output from the AI model and calling the getMsgs method to get the chat log
+    public async Task<string> GetResponseOutput()
     {
         try
         {
@@ -136,7 +143,37 @@ public class Scorer
             {
                 ["model"] = "llama-3.1-8b-instant",
                 ["messages"] = GetMsgs(),
-                ["max_tokens"] = 100,
+                ["max_tokens"] = 300,
+                ["temperature"] = 0
+            };
+
+            UnityEngine.Debug.Log("Request: " + request);
+            JObject? response = await groqApi.CreateChatCompletionAsync(request);
+            UnityEngine.Debug.Log("after request sent: " + response);
+
+            var content = response?["choices"]?[0]?["message"]?["content"];
+            UnityEngine.Debug.Log("content: " + content);
+
+            return content?.ToString() ?? string.Empty;
+        }
+        catch (Exception ex)
+        {
+            UnityEngine.Debug.LogError("Error during API call: " + ex.Message);
+            return string.Empty;
+        }
+    }
+
+    // Overload the GetResponseOutput method to accept a JArray parameter
+    // This is useful for testing the scoring system with different chat logs
+    public async Task<string> GetResponseOutput(JArray msgs)
+    {
+        try
+        {
+            JObject request = new JObject
+            {
+                ["model"] = "llama-3.1-8b-instant",
+                ["messages"] = msgs,
+                ["max_tokens"] = 300,
                 ["temperature"] = 0
             };
 

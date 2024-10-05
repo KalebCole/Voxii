@@ -1,0 +1,9 @@
+08:00:15 User: Hello! I'd like to order a coffee, please.
+08:00:30 Assistant: Sure! What kind of coffee would you like?
+08:01:10 User: I usually prefer something strong, maybe an Americano.
+08:01:30 Assistant: Great choice! Would you like it with any milk or sweetener?
+08:02:00 User: No, I like it black. Just the Americano, please.
+08:02:30 Assistant: Got it! Anything else I can get for you today?
+08:03:10 User: No, that’s all. How much do I owe you?
+08:03:40 Assistant: That will be $3.50. You can pay at the counter when you're ready.
+08:04:00 User: Thanks! I’ll do that now.

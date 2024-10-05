@@ -63,20 +63,12 @@ public class SecondaryBtnPress : MonoBehaviour
         // Create the Scorer with mock mode based on the useMockData flag
         Scorer scorer = new Scorer(chatLoop.chatLogFilePath, useMockData);
 
-        var scoreString = await scorer.GetScore();
-        if (scoreString == null)
-        {
-            Debug.LogError("Error: scoreString is null");
-            return;
-        }
-        Debug.Log("Score before parsing: " + scoreString);
+        // Get the points from the scorer
+        int points = await scorer.CalculatePointsAsync();
 
-        var scoreResult = ScoreResult.Parse(scoreString);
-        Debug.Log("Score after parsing: " + scoreResult.NumberOfErrors + ", " + scoreResult.Accuracy);
+        Debug.Log($"Points: {points}");    
 
-        // send the score to the points system
-        var points = ScoringSystem.CalculatePoints(scoreResult);
-        Debug.Log("Points: " + points);
+    
 
         // TODO: display it to a UI element that will pop up as soon as you click the secondary button, and wait until the score is calculated (through loading circle), then displayed
         // Then the user can exit out of it and continue with the conversation

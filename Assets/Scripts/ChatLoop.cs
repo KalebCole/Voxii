@@ -152,7 +152,7 @@ public class ChatLoop : MonoBehaviour
             ["model"] = "llama-3.1-8b-instant",
             ["messages"] = chatHistory,
             ["max_tokens"] = 100,
-            ["temperature"] = 1.2
+            ["temperature"] = 0.4
         };
 
         SetLoadingSymbolVisibility(true);

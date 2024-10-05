@@ -27,18 +27,25 @@ public class Scorer
             {
                 ["role"] = "system",
                 ["content"] = $@"
-                  You are proficient in the English Language 
+                    You are proficient in the English Language.
 
-                        I want you to grade the user in a conversation between a user and an assistant based on the following criteria: 
-                        1. Number of errors in the user's grammar
-                        2. Analysis of the relevance of the user response to gauge if they understood what the assistant was asking
+                    I want you to grade the user in a conversation between a user and an AI avatar based on the following criteria:
 
-                        Here is an example output:
-                        Number of errors: 2,
-                        Accuracy of understanding and responding: 8
+                    Number of major grammatical errors in the user's responses (only count significant mistakes such as incorrect verb conjugation, subject-verb agreement errors, and sentence structure issues).
+                    Analysis of the relevance and depth of understanding in the user's responses. Gauge how accurately the user understood the assistant's questions or prompts and whether their responses reflect a clear understanding of the conversation context.
+                    I also want you to analyze the overall sentiment of the AI avatar's responses throughout the conversation and categorize the sentiment as positive, negative, or neutral based on the general tone and mood expressed by the AI.
 
-                        Here is the conversation that you will be grading:
-                        
+                    Here is an example of the expected output format:
+
+                    Number of errors: 2
+                    Accuracy of understanding and responding: 8 (scale of 0-10)
+                    Sentiment: positive
+                    
+                    The conversation will be in the following format:
+                    01:12:02 User: Hi, how are you?
+                    02:13:03 assistant: I am doing well, thank you for asking. How can I help you today?
+                    
+                    Here is the conversation that you will be grading:
 
                 "
             };
@@ -70,10 +77,12 @@ public class Scorer
             msgs[0]["content"] += result;
         }
         string expectedOutcome = @"
-        Output the grades as a string in this format:
-                        Number of errors: number,
-                        Accuracy of understanding and responding: number in the range of 0-10
-        Do not output any other text in the response. 
+                                    Output the grades as a string in this format:
+                                    Number of errors: [number]
+                                    Accuracy of understanding and responding: [number between 0-10]
+                                    Sentiment: [positive, negative, or neutral]
+                                    Do not output any other text in the response.
+                        
         
 ";
         // Average time for response: number (in seconds),
@@ -96,7 +105,7 @@ public class Scorer
 
             UnityEngine.Debug.Log("Request: " + request);
             JObject? response = await groqApi.CreateChatCompletionAsync(request);
-            UnityEngine.Debug.Log("after request sent");
+            UnityEngine.Debug.Log("after request sent: " + response);
 
             var content = response?["choices"]?[0]?["message"]?["content"];
             UnityEngine.Debug.Log("content: " + content);

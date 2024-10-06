@@ -63,20 +63,12 @@ public class SecondaryBtnPress : MonoBehaviour
         // Create the Scorer with mock mode based on the useMockData flag
         Scorer scorer = new Scorer(chatLoop.chatLogFilePath, useMockData);
 
-        var scoreString = await scorer.GetScore();
-        if (scoreString == null)
-        {
-            Debug.LogError("Error: scoreString is null");
-            return;
-        }
-        Debug.Log("Score before parsing: " + scoreString);
+        // Get the points from the scorer
+        int points = await scorer.CalculatePointsAsync();
 
-        var scoreResult = ScoreResult.Parse(scoreString);
-        Debug.Log("Score after parsing: " + scoreResult.NumberOfErrors + ", " + scoreResult.Accuracy);
+        Debug.Log($"Points: {points}");    
 
-        // send the score to the points system
-        var points = ScoringSystem.CalculatePoints(scoreResult);
-        Debug.Log("Points: " + points);
+    
 
         // Save to static data class to be access by results UI
         ResultsData.points = points;

@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 public class SecondaryBtnPress : MonoBehaviour
 {
@@ -65,20 +66,20 @@ public class SecondaryBtnPress : MonoBehaviour
 
         // Get the points from the scorer
         int points = await scorer.CalculatePointsAsync();
+        (ScoreResult, float, List<ErrorExample>) values = await scorer.GetResultsAndResponseTimeAsync();
 
-        Debug.Log($"Points: {points}");    
+        Debug.Log($"Points: {points}");
 
-    
-
+        
         // Save to static data class to be access by results UI
         ResultsData.points = points;
-        ResultsData.errors = scoreResult.NumberOfErrors;
-        ResultsData.relevanceScore = scoreResult.Accuracy;
-
-        // TODO: response time and feedback point
-        //ResultsData.feedback = scoreResult.;
-        //ResultsData.feedback = scoreResult.;
-
+        ResultsData.errors = values.Item1.NumberOfErrors;
+        ResultsData.relevanceScore = values.Item1.Accuracy;
+        ResultsData.responseTime = ((int)values.Item2);
+        ResultsData.feedbackCategory = values.Item3[0].Category;
+        ResultsData.feedbackIncorrect = values.Item3[0].Incorrect;
+        ResultsData.feedbackCorrected = values.Item3[0].Corrected;
+        ResultsData.feedbackReasoning = values.Item3[0].Reasoning;
 
     }
 }

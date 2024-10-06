@@ -13,7 +13,10 @@ public class FeedbackScreenController : MonoBehaviour
     public TextMeshProUGUI grammarErrorValue;
     public TextMeshProUGUI responseTimeValue;
     public TextMeshProUGUI relevanceValue;
-    public TextMeshProUGUI feedbackPoint;
+    public TextMeshProUGUI feedbackCategory;
+    public TextMeshProUGUI feedbackIncorrect;
+    public TextMeshProUGUI feedbackCorrected;
+    public TextMeshProUGUI feedbackReasoning;
 
     void Start()
     {
@@ -24,9 +27,12 @@ public class FeedbackScreenController : MonoBehaviour
         // Initalise the text values
         pointValue.text = ResultsData.points.ToString(); ;
         grammarErrorValue.text = ResultsData.errors.ToString();
-        responseTimeValue.text = "3" + "%";//ResultsData..ToString();
+        responseTimeValue.text = ResultsData.responseTime.ToString() + "s";
         relevanceValue.text = ResultsData.relevanceScore.ToString() + "%";
-        feedbackPoint.text = "t";//ResultsData.feedback.ToString();
+        feedbackCategory.text = ResultsData.feedbackCategory;
+        feedbackIncorrect.text = ResultsData.feedbackIncorrect;
+        feedbackCorrected.text = ResultsData.feedbackCorrected;
+        feedbackReasoning.text = ResultsData.feedbackReasoning;
     }
 
     // Show Screen 2 and hide Screen 1

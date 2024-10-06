@@ -1,9 +1,11 @@
 using System.IO;
 using UnityEngine;
+using TMPro;
 
 public class MicRecorder : MonoBehaviour
 {
     public GameObject loadingSymbol;
+    public TextMeshProUGUI recordingDurationText;
 
     private AudioClip audioClip;
     private string microphoneName;

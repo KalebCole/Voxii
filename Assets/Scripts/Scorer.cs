@@ -200,7 +200,6 @@ public class Scorer
 
         var errorsMatch = Regex.Match(scoreString, @"Number of errors:\s*(\d+)");
         var accuracyMatch = Regex.Match(scoreString, @"Accuracy of understanding and responding:\s*(\d+)");
-        // var timeMatch = Regex.Match(scoreString, @"Average time for response:\s*([\d\.]+)");
 
         if (errorsMatch.Success)
             result.NumberOfErrors = int.Parse(errorsMatch.Groups[1].Value);
@@ -208,8 +207,6 @@ public class Scorer
         if (accuracyMatch.Success)
             result.Accuracy = int.Parse(accuracyMatch.Groups[1].Value);
 
-        // if (timeMatch.Success)
-        //     result.AverageResponseTime = float.Parse(timeMatch.Groups[1].Value);
 
         //debug
         UnityEngine.Debug.Log("Number of errors: " + result.NumberOfErrors);
@@ -423,6 +420,19 @@ public class Scorer
         var responseTime = CalculateResponseTime(chatLogFilePath);
         return CalculatePoints(scoreResult, responseTime);
     }
+
+    // Get ScoreResult object
+    public async Task<(ScoreResult, float, List<ErrorExample>)> GetResultsAndResponseTimeAsync()
+    {
+        var messages = GetMsgs();
+        var scoreString = await GetResponseOutput(messages);
+        var scoreResult = ParseScoreNumbers(scoreString);
+        var errors = ParseErrorExamples(scoreString);
+        var responseTime = CalculateResponseTime(chatLogFilePath);
+        return (scoreResult, responseTime, errors);
+    }
+
+
 
 }
 

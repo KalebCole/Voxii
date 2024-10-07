@@ -190,6 +190,7 @@ public class ChatLoop : MonoBehaviour
 
         animator.SetBool("happy", sentiment);
 
+        setIsResponding(true);
         await AIVoice.Speak(contentStr);
         setIsResponding(false);
 

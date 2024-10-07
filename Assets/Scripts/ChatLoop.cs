@@ -5,6 +5,7 @@ using Newtonsoft.Json.Linq;
 using System.Threading.Tasks;
 using System.IO;
 using System.Text.RegularExpressions;
+using TMPro;
 
 public class ChatLoop : MonoBehaviour
 {
@@ -15,6 +16,8 @@ public class ChatLoop : MonoBehaviour
     public string chatLogFilePath;
     public GameObject loadingSymbol;
     public int msgsSent { get; private set; } = 0;
+    public TextMeshProUGUI messagesRemainingValue;
+    public LevelManagement levelManagement;
 
     private static readonly string initialAIMessage = "Hello, welcome to our cafe. What can I get for you today?";
     //private static readonly OnboardingData onboardingData = new OnboardingData();
@@ -194,7 +197,17 @@ public class ChatLoop : MonoBehaviour
         await AIVoice.Speak(contentStr);
         setIsResponding(false);
 
+        // Update the number of messages remaining
         ++msgsSent;
+        int temp = 10 - msgsSent;
+        messagesRemainingValue.text = temp.ToString();
+
+        // When max number of messages have been set, switch to 'finished level' UI
+        if (msgsSent == 10)
+        {
+            levelManagement.switchDisplays();
+        }
+        
     }
 
     private bool GetSentiment(string msg)

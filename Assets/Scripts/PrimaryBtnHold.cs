@@ -57,7 +57,7 @@ public class PrimaryBtnHold : MonoBehaviour
 
         if (!this.isRecording) // The performer event might be sent multiple times while holding down
         {
-            chatLoop.setIsResponding(true);
+            chatLoop.setUserSpeaking(true);
             this.isRecording = true;
             micRecorder.StartRecording();
         }
@@ -76,6 +76,7 @@ public class PrimaryBtnHold : MonoBehaviour
         }
 
         micRecorder.StopRecording();
+        chatLoop.setUserSpeaking(false);
         // micRecorder.PlayRecording();
         micRecorder.SaveRecording();
         this.isRecording = false;

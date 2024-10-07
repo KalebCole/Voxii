@@ -11,6 +11,7 @@ public class ChatLoop : MonoBehaviour
     public Animator animator;
     public GroqApiClient groqApi = new GroqApiClient();
     public bool isResponding = false;
+    public bool userSpeaking = false;
     public string chatLogFilePath;
     public GameObject loadingSymbol;
     public int msgsSent { get; private set; } = 0;
@@ -57,6 +58,12 @@ public class ChatLoop : MonoBehaviour
     {
         isResponding = value;
         animator.SetBool("isResponding", value);
+    }
+
+    public void setUserSpeaking(bool value)
+    {
+        userSpeaking = value;
+        animator.SetBool("userSpeaking", value);
     }
 
     private async void Start()

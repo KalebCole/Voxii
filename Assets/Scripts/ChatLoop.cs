@@ -1,6 +1,7 @@
 # nullable enable
 
 using UnityEngine;
+using UnityEngine.XR.OpenXR;
 using Newtonsoft.Json.Linq;
 using System.Threading.Tasks;
 using System.IO;
@@ -71,6 +72,13 @@ public class ChatLoop : MonoBehaviour
 
     private async void Start()
     {
+        Time.timeScale = 0;
+
+        // Delay for 1 second to allow the VR headset to load
+        await Task.Delay(1000);
+
+        Time.timeScale = 1;
+
         Debug.Log("Avatar Hostility:" + MenuData.AvatarHostility);
         chatLogFilePath = Path.Combine(Application.persistentDataPath, "chat_log.txt");
         ClearChatLog();
@@ -207,7 +215,7 @@ public class ChatLoop : MonoBehaviour
         {
             levelManagement.switchDisplays();
         }
-        
+
     }
 
     private bool GetSentiment(string msg)

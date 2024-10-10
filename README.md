@@ -300,3 +300,12 @@ Note that only public methods are included here
 - static string feedbackIncorrect;
 - static string feedbackCorrected;
 - static string feedbackReasoning;
+
+### SentimentAnalyzer.cs
+- Contains the logic to analyze the sentiment of the AI response every time the AI responds
+- Used to update the animation of the AI avatar
+
+#### Methods
+- `public async Task<bool> IsPositiveOrNeutralSentiment(string message)`
+  - Sends the AI avatar's response to the Groq API to analyze the sentiment
+  - Returns true if the sentiment is positive or neutral, false otherwise

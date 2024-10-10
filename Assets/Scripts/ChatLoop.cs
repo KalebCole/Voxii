@@ -199,9 +199,8 @@ public class ChatLoop : MonoBehaviour
 
     private bool GetSentiment(string msg)
     {
-        // randomly return a sentiment
-        // True is happy
-        return Random.value > 0.5f;
+        SentimentAnalyzer sentimentAnalyzer = new SentimentAnalyzer();
+        return sentimentAnalyzer.IsPositiveOrNeutralSentiment(msg).Result;
     }
 
     private void SetLoadingSymbolVisibility(bool isVisible)

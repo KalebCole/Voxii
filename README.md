@@ -30,21 +30,6 @@ SDK version - .NET Framework
 
 Note that only public methods are included here
 
-### BackgroundMusicController.cs
-
-- Controls the background music
-
-#### Public variables
-- Button muteButton
-- GameObject symbol: symbol to show the mute button
-- Sprite unmutedImage
-- Sprite mutedImage
-
-#### Methods
-- `void ToggleMute`
-- `UpdateButtonImage`
-  - Changes the button image based on the mute state
-
 ### XRInputActions.inputactions
 - Contains the mappings which map from the keyboard to the controller's controls
 
@@ -209,3 +194,18 @@ Note that only public methods are included here
 - `async Task<string> TranscribeRecording()`
   - Gets the string for the user's speech stored in `recording.wav` in the application's persistent data path
  
+
+### BackgroundMusicController.cs
+
+- Controls the background music
+
+#### Public variables
+- Button muteButton
+- GameObject symbol: symbol to show the mute button
+- Sprite unmutedImage
+- Sprite mutedImage
+
+#### Methods
+- `void ToggleMute`
+- `UpdateButtonImage`
+  - Changes the button image based on the mute state

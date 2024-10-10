@@ -243,3 +243,21 @@ Note that only public methods are included here
 - `void goToMainMenu`
 - `void goToPostLevel`
 - `void switchDisplays`
+
+### MenuData.cs (static class)
+#### Public variables
+- static List<bool> OptionsSelected
+- static string SceneSelection
+- static float LanguageProficiency
+- static float AvatarHostility
+- static string filePath
+
+#### Methods
+- `static void SetFilePath(string appDataPath)`
+  - Needed because Application.persistentDataPath can't be accessed by a static non-MonoBehavior class
+- `static void SaveDataToJson`
+- `static void LoadDataFromJson`
+- `static string getRole`
+  - Gets the role depending on the scene
+- `class MenuDataModel`
+  - Stores needed data (OptionsSelected, SceneSelection, LanguageProficiency, AvatarHostility)

@@ -231,3 +231,15 @@ Note that only public methods are included here
 
 - `void ShowSecondScreen`
 - `void ChangeToMenuScene`
+
+### LevelManagement.cs
+- Manages the levels
+
+#### Public variables
+- GameObject display1
+- GameObject display2
+
+#### Methods
+- `void goToMainMenu`
+- `void goToPostLevel`
+- `void switchDisplays`

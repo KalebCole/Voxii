@@ -209,3 +209,25 @@ Note that only public methods are included here
 - `void ToggleMute`
 - `UpdateButtonImage`
   - Changes the button image based on the mute state
+
+### FeedbackScreenController.cs
+- Controls the feedback screen
+
+#### Public variables
+- GameObject screen1;
+- GameObject screen2;
+- Button nextButton;
+- Button doneButton;
+- TextMeshProUGUI pointValue;
+- TextMeshProUGUI grammarErrorValue;
+- TextMeshProUGUI responseTimeValue;
+- TextMeshProUGUI relevanceValue;
+- TextMeshProUGUI feedbackCategory;
+- TextMeshProUGUI feedbackIncorrect;
+- TextMeshProUGUI feedbackCorrected;
+- TextMeshProUGUI feedbackReasoning;
+
+#### Methods
+
+- `void ShowSecondScreen`
+- `void ChangeToMenuScene`

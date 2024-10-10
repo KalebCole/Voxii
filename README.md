@@ -68,12 +68,21 @@ Note that only public methods are included here
 #### Public variables:
 - GroqApiClient groqApi
 - bool isResponding: Keeps track of whether the AI is responding
+- bool userSpeaking: Keeps track of whether the user is speaking
 - string chatLogFilePath: The file path for the chat logs
+- GameObject loadingSymbol
+- int msgsSent
+- TextMeshProUGUI messagesRemainingValue
+- LevelManagement levelManagement
 
 #### Methods
 
 - `async Task SendUserMessage(string msg)`
   - Sends the given message to the AI avatar, adds it to the logs and chat history
+- `void setIsResponding(bool value)`
+  - setter for `isResponding` variable
+- `void setUserSpeaking(bool value)`
+  - setter for `userSpeaking` variable
 
 ### GameController.cs
 - Handles game related logic

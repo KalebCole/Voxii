@@ -182,7 +182,32 @@ Note that only public methods are included here
  
 - `async Task<string> GetScore()`
   - Gets the score on the user's english of the conversation
+
+- `async Task<string> GetResponseOutput(JArray msgs)`
+  - Overload the GetResponseOutput method to accept a JArray parameter
+  - This is useful for testing the scoring system with different chat logs
  
+- `ScoreResult ParseScoreNumbers(string scoreString)`
+  - Parse the score string to extract the number of errors and accuracy
+- `SentimentResult ParseSentiment(string scoreString)`
+  - Parse the sentiment from the AI response
+- `public List<ErrorExample> ParseErrorExamples(string scoreString)`
+  - Parse the error examples from the AI response
+- `float CalculateResponseTime(string chatLogFilePath)`
+  - Calculate the time taken for the user to respond to the AI
+- `static int CalculatePoints(ScoreResult scoreResult, float responseTime)`
+  - Calculate the points based on the score result
+- `async Task<int> CalculatePointsAsync()`
+  - Step by step calculation of points
+- `async Task<(ScoreResult, float, List<ErrorExample>)> GetResultsAndResponseTimeAsync`
+  - Get ScoreResult object
+- `class ScoreResult`
+  - Keeps data needed for score result (NumberOfErrors, Accuracy)
+- `class SentimentResult`
+  - Keeps data needed for sentiment result (Sentiment)
+- `class ErrorExample`
+  - Keeps data needed for error examples (Category, Incorrect, Corrected, Reasoning)
+
 ### WhisperTranscriber.cs
 - Contains the logic for transcribing the user's speech to text
 

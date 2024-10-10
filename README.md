@@ -53,12 +53,21 @@ Note that only public methods are included here
 #### Public variables:
 - GroqApiClient groqApi
 - bool isResponding: Keeps track of whether the AI is responding
+- bool userSpeaking: Keeps track of whether the user is speaking
 - string chatLogFilePath: The file path for the chat logs
+- GameObject loadingSymbol
+- int msgsSent
+- TextMeshProUGUI messagesRemainingValue
+- LevelManagement levelManagement
 
 #### Methods
 
 - `async Task SendUserMessage(string msg)`
   - Sends the given message to the AI avatar, adds it to the logs and chat history
+- `void setIsResponding(bool value)`
+  - setter for `isResponding` variable
+- `void setUserSpeaking(bool value)`
+  - setter for `userSpeaking` variable
 
 ### GameController.cs
 - Handles game related logic
@@ -173,7 +182,32 @@ Note that only public methods are included here
  
 - `async Task<string> GetScore()`
   - Gets the score on the user's english of the conversation
+
+- `async Task<string> GetResponseOutput(JArray msgs)`
+  - Overload the GetResponseOutput method to accept a JArray parameter
+  - This is useful for testing the scoring system with different chat logs
  
+- `ScoreResult ParseScoreNumbers(string scoreString)`
+  - Parse the score string to extract the number of errors and accuracy
+- `SentimentResult ParseSentiment(string scoreString)`
+  - Parse the sentiment from the AI response
+- `public List<ErrorExample> ParseErrorExamples(string scoreString)`
+  - Parse the error examples from the AI response
+- `float CalculateResponseTime(string chatLogFilePath)`
+  - Calculate the time taken for the user to respond to the AI
+- `static int CalculatePoints(ScoreResult scoreResult, float responseTime)`
+  - Calculate the points based on the score result
+- `async Task<int> CalculatePointsAsync()`
+  - Step by step calculation of points
+- `async Task<(ScoreResult, float, List<ErrorExample>)> GetResultsAndResponseTimeAsync`
+  - Get ScoreResult object
+- `class ScoreResult`
+  - Keeps data needed for score result (NumberOfErrors, Accuracy)
+- `class SentimentResult`
+  - Keeps data needed for sentiment result (Sentiment)
+- `class ErrorExample`
+  - Keeps data needed for error examples (Category, Incorrect, Corrected, Reasoning)
+
 ### WhisperTranscriber.cs
 - Contains the logic for transcribing the user's speech to text
 
@@ -185,3 +219,84 @@ Note that only public methods are included here
 - `async Task<string> TranscribeRecording()`
   - Gets the string for the user's speech stored in `recording.wav` in the application's persistent data path
  
+
+### BackgroundMusicController.cs
+
+- Controls the background music
+
+#### Public variables
+- Button muteButton
+- GameObject symbol: symbol to show the mute button
+- Sprite unmutedImage
+- Sprite mutedImage
+
+#### Methods
+- `void ToggleMute`
+- `UpdateButtonImage`
+  - Changes the button image based on the mute state
+
+### FeedbackScreenController.cs
+- Controls the feedback screen
+
+#### Public variables
+- GameObject screen1;
+- GameObject screen2;
+- Button nextButton;
+- Button doneButton;
+- TextMeshProUGUI pointValue;
+- TextMeshProUGUI grammarErrorValue;
+- TextMeshProUGUI responseTimeValue;
+- TextMeshProUGUI relevanceValue;
+- TextMeshProUGUI feedbackCategory;
+- TextMeshProUGUI feedbackIncorrect;
+- TextMeshProUGUI feedbackCorrected;
+- TextMeshProUGUI feedbackReasoning;
+
+#### Methods
+
+- `void ShowSecondScreen`
+- `void ChangeToMenuScene`
+
+### LevelManagement.cs
+- Manages the levels
+
+#### Public variables
+- GameObject display1
+- GameObject display2
+
+#### Methods
+- `void goToMainMenu`
+- `void goToPostLevel`
+- `void switchDisplays`
+
+### MenuData.cs (static class)
+#### Public variables
+- static List<bool> OptionsSelected
+- static string SceneSelection
+- static float LanguageProficiency
+- static float AvatarHostility
+- static string filePath
+
+#### Methods
+- `static void SetFilePath(string appDataPath)`
+  - Needed because Application.persistentDataPath can't be accessed by a static non-MonoBehavior class
+- `static void SaveDataToJson`
+- `static void LoadDataFromJson`
+- `static string getRole`
+  - Gets the role depending on the scene
+- `class MenuDataModel`
+  - Stores needed data (OptionsSelected, SceneSelection, LanguageProficiency, AvatarHostility)
+
+### ResultsData
+- Class to store result data
+  
+#### Public variables
+
+- static int points;
+- static int errors;
+- static int relevanceScore;
+- static int responseTime;
+- static string feedbackCategory;
+- static string feedbackIncorrect;
+- static string feedbackCorrected;
+- static string feedbackReasoning;

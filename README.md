@@ -286,3 +286,17 @@ Note that only public methods are included here
   - Gets the role depending on the scene
 - `class MenuDataModel`
   - Stores needed data (OptionsSelected, SceneSelection, LanguageProficiency, AvatarHostility)
+
+### ResultsData
+- Class to store result data
+  
+#### Public variables
+
+- static int points;
+- static int errors;
+- static int relevanceScore;
+- static int responseTime;
+- static string feedbackCategory;
+- static string feedbackIncorrect;
+- static string feedbackCorrected;
+- static string feedbackReasoning;

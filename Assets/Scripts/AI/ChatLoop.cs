@@ -197,7 +197,14 @@ public class ChatLoop : MonoBehaviour
         LogMessage("assistant", contentStr);
         Debug.Log("Assistant: " + contentStr);
 
-        bool sentiment = GetSentiment(contentStr);
+        // debug
+        Debug.Log("Before GetSentiment");
+
+        // we need to await the assistant speaking before we can get the sentiment
+        bool sentiment = await GetSentimentAsync(contentStr);
+
+        // debug
+        Debug.Log("After GetSentiment");
 
         animator.SetBool("happy", sentiment);
 
@@ -218,10 +225,11 @@ public class ChatLoop : MonoBehaviour
 
     }
 
-    private bool GetSentiment(string msg)
+    private async Task<bool> GetSentimentAsync(string msg)
     {
         SentimentAnalyzer sentimentAnalyzer = new SentimentAnalyzer();
-        return sentimentAnalyzer.IsPositiveOrNeutralSentiment(msg).Result;
+        return await sentimentAnalyzer.IsPositiveOrNeutralSentiment(msg);
+        // return true;
     }
 
     private void SetLoadingSymbolVisibility(bool isVisible)

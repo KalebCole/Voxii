@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Text.RegularExpressions;
 using TMPro;
+using System.Collections.Generic;
 
 public class ChatLoop : MonoBehaviour
 {
@@ -18,7 +19,7 @@ public class ChatLoop : MonoBehaviour
     public GameObject loadingSymbol;
     public int msgsSent { get; private set; } = 0;
 
-    public int maxMessages = 2;
+    public int maxMessages = 1;
     public TextMeshProUGUI messagesRemainingValue;
     public LevelManagement levelManagement;
 
@@ -224,6 +225,7 @@ public class ChatLoop : MonoBehaviour
         // When max number of messages have been set, switch to 'finished level' UI
         if (msgsSent == maxMessages)
         {
+            await ScoreLevelAsync();
             levelManagement.switchDisplays();
         }
 
@@ -242,5 +244,30 @@ public class ChatLoop : MonoBehaviour
         {
             loadingSymbol.SetActive(isVisible);
         }
+    }
+
+    public async Task ScoreLevelAsync()
+    {
+        // Create the Scorer with mock mode based on the useMockData flag
+        Scorer scorer = new Scorer(chatLogFilePath);
+
+        // Get the points from the scorer
+        int points = await scorer.CalculatePointsAsync();
+        (ScoreResult, float, List<ErrorExample>) values = await scorer.GetResultsAndResponseTimeAsync();
+
+        Debug.Log($"Points in Scdareybutn pres: {points}");
+
+        // Save to static data class to be access by results UI
+        ResultsData.points = points;
+        // debug
+        Debug.Log("ResultsData.points in SCNDARYBTNPRESS: " + ResultsData.points);
+        ResultsData.errors = values.Item1.NumberOfErrors;
+        ResultsData.relevanceScore = values.Item1.Accuracy;
+        ResultsData.responseTime = ((int)values.Item2);
+        ResultsData.feedbackCategory = values.Item3[0].Category;
+        ResultsData.feedbackIncorrect = values.Item3[0].Incorrect;
+        ResultsData.feedbackCorrected = values.Item3[0].Corrected;
+        ResultsData.feedbackReasoning = values.Item3[0].Reasoning;
+
     }
 }

@@ -24,8 +24,10 @@ public class FeedbackScreenController : MonoBehaviour
         screen1.SetActive(true);
         screen2.SetActive(false);
 
+        // debug
+        Debug.Log("ResultsData.points: " + ResultsData.points);
         // Initalise the text values
-        pointValue.text = ResultsData.points.ToString(); ;
+        pointValue.text = ResultsData.points.ToString();
         grammarErrorValue.text = ResultsData.errors.ToString();
         responseTimeValue.text = ResultsData.responseTime.ToString() + "s";
         relevanceValue.text = ResultsData.relevanceScore.ToString() + "%";

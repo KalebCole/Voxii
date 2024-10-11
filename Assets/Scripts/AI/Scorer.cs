@@ -234,15 +234,43 @@ public class Scorer
     public List<ErrorExample> ParseErrorExamples(string scoreString)
     {
         var errorExamples = new List<ErrorExample>();
+        // debug scoreString
+        UnityEngine.Debug.Log("Score String: " + scoreString);
+
 
         var errorMatch = Regex.Match(scoreString, @"Error Examples:(.*)Accuracy of understanding and responding:", RegexOptions.Singleline);
+
+        // debug errorMatch
+        UnityEngine.Debug.Log("Error Match: " + errorMatch);
         if (errorMatch.Success)
         {
             var errorList = errorMatch.Groups[1].Value;
             var errorLines = errorList.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
 
+            // if length = 1, split by \n
+            if (errorLines.Length == 1)
+            {
+                errorLines = errorList.Split(new string[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
+            }
+
+            // idk why but get rid of the first element because it's empty
+            errorLines = errorLines.Skip(1).ToArray();
+
+
+            // debug errorLines
+            UnityEngine.Debug.Log("Error Lines lenght: " + errorLines.Length);
+
+            // print all of the error lines
+            foreach (var error in errorLines)
+            {
+                UnityEngine.Debug.Log("Error: " + error);
+            }
+
             for (int i = 0; i < errorLines.Length; i += 4)
             {
+                // debug errorLines
+                UnityEngine.Debug.Log("Error Lines: " + errorLines[i]);
+
                 var error = new ErrorExample
                 {
                     Category = errorLines[i].Trim(),
@@ -252,17 +280,20 @@ public class Scorer
                 };
                 errorExamples.Add(error);
             }
+            // debug
+            UnityEngine.Debug.Log("Error Examples:");
+            foreach (var error in errorExamples)
+            {
+                UnityEngine.Debug.Log(error.Category);
+                UnityEngine.Debug.Log(error.Incorrect);
+                UnityEngine.Debug.Log(error.Corrected);
+                UnityEngine.Debug.Log(error.Reasoning);
+            }
         }
-
         // debug
-        UnityEngine.Debug.Log("Error Examples:");
-        foreach (var error in errorExamples)
-        {
-            UnityEngine.Debug.Log(error.Category);
-            UnityEngine.Debug.Log(error.Incorrect);
-            UnityEngine.Debug.Log(error.Corrected);
-            UnityEngine.Debug.Log(error.Reasoning);
-        }
+        UnityEngine.Debug.Log("Error Examples: " + errorExamples);
+
+
         return errorExamples;
     }
 
@@ -405,7 +436,7 @@ public class Scorer
         }
 
         // debug
-        UnityEngine.Debug.Log("Points: " + points);
+        UnityEngine.Debug.Log("Points in Calculate Pon: " + points);
 
 
         return points;

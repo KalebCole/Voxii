@@ -40,7 +40,7 @@ public class SecondaryBtnPress : MonoBehaviour
         HandlePressAsync();
     }
 
-    private async Task HandlePressAsync()
+    public async Task HandlePressAsync()
     {
         if (chatLoop == null)
         {
@@ -68,11 +68,13 @@ public class SecondaryBtnPress : MonoBehaviour
         int points = await scorer.CalculatePointsAsync();
         (ScoreResult, float, List<ErrorExample>) values = await scorer.GetResultsAndResponseTimeAsync();
 
-        Debug.Log($"Points: {points}");
+        Debug.Log($"Points in Scdareybutn pres: {points}");
 
         
         // Save to static data class to be access by results UI
         ResultsData.points = points;
+        // debug
+        Debug.Log("ResultsData.points in SCNDARYBTNPRESS: " + ResultsData.points);
         ResultsData.errors = values.Item1.NumberOfErrors;
         ResultsData.relevanceScore = values.Item1.Accuracy;
         ResultsData.responseTime = ((int)values.Item2);

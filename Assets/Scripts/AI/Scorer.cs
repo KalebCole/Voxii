@@ -238,7 +238,7 @@ public class Scorer
         UnityEngine.Debug.Log("Score String: " + scoreString);
 
 
-        var errorMatch = Regex.Match(scoreString, @"Error Examples:(.*)Accuracy of understanding and responding:", RegexOptions.Singleline);
+        var errorMatch = Regex.Match(scoreString, @"Error Examples:(.*)Accuracy", RegexOptions.Singleline);
 
         // debug errorMatch
         UnityEngine.Debug.Log("Error Match: " + errorMatch);

@@ -19,7 +19,7 @@ public class ChatLoop : MonoBehaviour
     public GameObject loadingSymbol;
     public int msgsSent { get; private set; } = 0;
 
-    private int maxMessages = 10;
+    private int maxMessages = 4;
     public TextMeshProUGUI messagesRemainingValue;
     public LevelManagement levelManagement;
 
@@ -258,19 +258,42 @@ public class ChatLoop : MonoBehaviour
         int points = await scorer.CalculatePointsAsync();
         (ScoreResult, float, List<ErrorExample>) values = await scorer.GetResultsAndResponseTimeAsync();
 
+        // debug values by logging the list of error examples
+        foreach (ErrorExample error in values.Item3)
+        {
+            Debug.Log($"Error in  score leel: {error}");
+        }
+
+
         Debug.Log($"Points in Scdareybutn pres: {points}");
+
+
 
         // Save to static data class to be access by results UI
         ResultsData.points = points;
-        // debug
-        Debug.Log("ResultsData.points in SCNDARYBTNPRESS: " + ResultsData.points);
+
+        // if errors is 0, item3 will be empty so set the feedback to empty strings
         ResultsData.errors = values.Item1.NumberOfErrors;
-        ResultsData.relevanceScore = values.Item1.Accuracy;
-        ResultsData.responseTime = ((int)values.Item2);
-        ResultsData.feedbackCategory = values.Item3[0].Category;
-        ResultsData.feedbackIncorrect = values.Item3[0].Incorrect;
-        ResultsData.feedbackCorrected = values.Item3[0].Corrected;
-        ResultsData.feedbackReasoning = values.Item3[0].Reasoning;
+        ResultsData.relevanceScore = values.Item1.Accuracy * 10;
+        ResultsData.responseTime = (int)values.Item2;
+        if (values.Item3.Count > 0) // no errors
+        {
+            // debug
+            Debug.Log("Errors in score level");
+            ResultsData.feedbackCategory = values.Item3[0].Category;
+            ResultsData.feedbackIncorrect = values.Item3[0].Incorrect;
+            ResultsData.feedbackCorrected = values.Item3[0].Corrected;
+            ResultsData.feedbackReasoning = values.Item3[0].Reasoning;
+        }
+        else
+        {
+            // debug
+            Debug.Log("No errors in score level");
+            ResultsData.feedbackCategory = "";
+            ResultsData.feedbackIncorrect = "";
+            ResultsData.feedbackCorrected = "";
+            ResultsData.feedbackReasoning = "";
+        }
 
     }
 }

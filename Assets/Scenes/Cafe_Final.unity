@@ -96,7 +96,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: 67691d4c20eb1c6419d65944f099279c, type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -4412,6 +4412,7 @@ MonoBehaviour:
   userSpeaking: 0
   chatLogFilePath: 
   loadingSymbol: {fileID: 357491460}
+  maxMessages: 2
   messagesRemainingValue: {fileID: 675807147}
   levelManagement: {fileID: 847757373}
 --- !u!4 &1400510137

@@ -31,7 +31,7 @@ public class ChatLoop : MonoBehaviour
     {
         ["role"] = "system",
         ["content"] = $@"
-         You are in a {MenuData.SceneSelection}, acting as a {MenuData.getRole()}. Your goal is to create a comfortable, immersive environment for the user to practice english.
+         You are in a {MenuData.SceneSelection}, acting as a Male {MenuData.getRole()}. Your goal is to create a comfortable, immersive environment for the user to practice english.
 
         Your conversation partner, has a language proficiency level of {MenuData.LanguageProficiency} out of 5 in english and wishes to practice the following phrases: {string.Join(", ", MenuData.OptionsSelected)}.
 

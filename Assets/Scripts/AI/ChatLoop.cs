@@ -19,7 +19,7 @@ public class ChatLoop : MonoBehaviour
     public GameObject loadingSymbol;
     public int msgsSent { get; private set; } = 0;
 
-    public int maxMessages = 1;
+    private int maxMessages = 10;
     public TextMeshProUGUI messagesRemainingValue;
     public LevelManagement levelManagement;
 

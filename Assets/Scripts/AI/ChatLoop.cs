@@ -23,6 +23,8 @@ public class ChatLoop : MonoBehaviour
     public TextMeshProUGUI messagesRemainingValue;
     public LevelManagement levelManagement;
 
+    public PrimaryBtnHold primaryBtnHold;
+
     private static readonly string initialAIMessage = "Hello, welcome to our cafe. What can I get for you today?";
     //private static readonly OnboardingData onboardingData = new OnboardingData();
     private static readonly JObject systemPrompt = new JObject
@@ -225,6 +227,7 @@ public class ChatLoop : MonoBehaviour
         // When max number of messages have been set, switch to 'finished level' UI
         if (msgsSent == maxMessages)
         {
+            primaryBtnHold.enabled = false;
             await ScoreLevelAsync();
             levelManagement.switchDisplays();
         }

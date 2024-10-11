@@ -17,6 +17,8 @@ public class ChatLoop : MonoBehaviour
     public string chatLogFilePath;
     public GameObject loadingSymbol;
     public int msgsSent { get; private set; } = 0;
+
+    public int maxMessages = 2;
     public TextMeshProUGUI messagesRemainingValue;
     public LevelManagement levelManagement;
 
@@ -72,6 +74,8 @@ public class ChatLoop : MonoBehaviour
 
     private async void Start()
     {
+        messagesRemainingValue.text = maxMessages.ToString();
+
         Time.timeScale = 0;
 
         // Delay for 1 second to allow the VR headset to load
@@ -156,6 +160,10 @@ public class ChatLoop : MonoBehaviour
             setIsResponding(false);
             return;
         }
+        // Update the number of messages remaining
+        ++msgsSent;
+        int temp = maxMessages - msgsSent;
+        messagesRemainingValue.text = temp.ToString();
 
         Debug.Log("Sending message: " + msg);
         JObject userMessage = new JObject { ["role"] = "user", ["content"] = msg };
@@ -174,6 +182,7 @@ public class ChatLoop : MonoBehaviour
         };
 
         SetLoadingSymbolVisibility(true);
+
 
         JObject? response = await groqApi.CreateChatCompletionAsync(request);
         var content = response?["choices"]?[0]?["message"]?["content"];
@@ -212,13 +221,8 @@ public class ChatLoop : MonoBehaviour
         await AIVoice.Speak(contentStr);
         setIsResponding(false);
 
-        // Update the number of messages remaining
-        ++msgsSent;
-        int temp = 10 - msgsSent;
-        messagesRemainingValue.text = temp.ToString();
-
         // When max number of messages have been set, switch to 'finished level' UI
-        if (msgsSent == 10)
+        if (msgsSent == maxMessages)
         {
             levelManagement.switchDisplays();
         }

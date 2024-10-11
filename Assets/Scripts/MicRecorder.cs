@@ -40,7 +40,7 @@ public class MicRecorder : MonoBehaviour
             this.audioClip = Microphone.Start(microphoneName, false, 60, 16000); // 1 minute max with 16kHz sample rate
             this.isRecording = true;
             recordingStartTime = Time.time; // Record the start time
-            SetLoadingSymbolVisibility(true);
+            SetLoadingSymbolVisibility(true);   
             Debug.Log("Recording started.");
         }
     }

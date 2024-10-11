@@ -645,7 +645,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Class
+  m_text: Beach
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4d159f9529b93c241859b2a24113fd6a, type: 2}
   m_sharedMaterial: {fileID: -3411273365673190195, guid: 4d159f9529b93c241859b2a24113fd6a, type: 2}
@@ -2511,9 +2511,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1165247179}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 97.333336, y: -18}
   m_SizeDelta: {x: 41, y: 36}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &469899198
@@ -3367,7 +3367,7 @@ GameObject:
   - component: {fileID: 700762291}
   - component: {fileID: 700762290}
   m_Layer: 5
-  m_Name: Cafe
+  m_Name: Cafe_Final
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4016,7 +4016,7 @@ GameObject:
   - component: {fileID: 823590887}
   - component: {fileID: 823590886}
   m_Layer: 5
-  m_Name: Beach
+  m_Name: Car Workshop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5796,7 +5796,7 @@ GameObject:
   - component: {fileID: 1216573888}
   - component: {fileID: 1216573887}
   m_Layer: 5
-  m_Name: Class
+  m_Name: Beach
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8222,6 +8222,7 @@ GameObject:
   - component: {fileID: 1680853090}
   - component: {fileID: 1680853089}
   - component: {fileID: 1680853088}
+  - component: {fileID: 1680853093}
   m_Layer: 5
   m_Name: UI
   m_TagString: Untagged
@@ -8340,6 +8341,32 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 1}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1680853093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1680853087}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 756e154b3812b420897c9d5f0138139d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  optionToggles:
+  - {fileID: 1734588225}
+  - {fileID: 1272180404}
+  - {fileID: 358884514}
+  - {fileID: 290674346}
+  - {fileID: 404507886}
+  - {fileID: 10198212}
+  sceneToggles:
+  - {fileID: 700762292}
+  - {fileID: 823590888}
+  - {fileID: 1216573889}
+  languageProficiencySlider: {fileID: 861523063}
+  avatarHostilitySlider: {fileID: 1391098680}
+  doneButton: {fileID: 1362063317}
 --- !u!1 &1713836948
 GameObject:
   m_ObjectHideFlags: 0
@@ -9373,7 +9400,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Beach
+  m_text: 'Car Workshop
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4d159f9529b93c241859b2a24113fd6a, type: 2}
   m_sharedMaterial: {fileID: -3411273365673190195, guid: 4d159f9529b93c241859b2a24113fd6a, type: 2}
@@ -9436,7 +9465,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -7.8032837, y: 0, z: -10.943176, w: 0}
+  m_margin: {x: -36.688522, y: 0, z: -37.124714, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

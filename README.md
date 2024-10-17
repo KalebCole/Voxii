@@ -18,12 +18,16 @@ An immersive virtual reality language learning windows desktop application. By s
 4. Press the controller's secondary button to get feedback on the conversation so far
 
 ## Demo
-[![Watch the video](https://i.imgur.com/dn050iWl.png)](https://youtu.be/w4oMArZul2A)
 
-**Click the image to watch the demo video**
+|  | Demos |
+|-------|------------|
+|  
+**👉 Click the image to watch the demo video** |  [![Watch the video](https://i.imgur.com/7LKoxNl.png)](https://drive.google.com/file/d/1-dYw1LEjvwBioJJgKyHAPzA2zJ9YAJmm/view?usp=sharing) 
+**👉 Click the image to view the pitch deck** |[![View the pitch deck](https://i.imgur.com/MciAf0O.png)](https://docs.google.com/presentation/d/e/2PACX-1vQlnCTSOKKt2h08IDA2N8Pc5B1LLoYhsxkzwXXdgnDHhHX_r1eM3tADeDBCC66Xyw/pub?start=false&loop=false&delayms=3000) 
 
-[View the pitch deck](https://docs.google.com/presentation/d/e/2PACX-1vQlnCTSOKKt2h08IDA2N8Pc5B1LLoYhsxkzwXXdgnDHhHX_r1eM3tADeDBCC66Xyw/pub?start=false&loop=false&delayms=3000)
-<hr>
+---
+
+
 
 # Documentation
 

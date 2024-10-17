@@ -22,7 +22,10 @@ An immersive virtual reality language learning windows desktop application. By s
 
 **Click the image to watch the demo video**
 
-## Documentation
+[View the pitch deck](https://docs.google.com/presentation/d/e/2PACX-1vQlnCTSOKKt2h08IDA2N8Pc5B1LLoYhsxkzwXXdgnDHhHX_r1eM3tADeDBCC66Xyw/pub?start=false&loop=false&delayms=3000)
+<hr>
+
+# Documentation
 
 Unity version - 2022.3.39f1
 

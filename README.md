@@ -83,13 +83,10 @@ Ready to dive in? Follow these simple steps to start your language learning jour
     - Use the feedback to improve your language skills continuously.
 ## Demo
 
-|  | Demos |
-|-------|------------|
-|  
-**👉 Click the image to watch the demo video** |  [![Watch the video](https://i.imgur.com/7LKoxNl.png)](https://drive.google.com/file/d/1-dYw1LEjvwBioJJgKyHAPzA2zJ9YAJmm/view?usp=sharing) 
-**👉 Click the image to view the pitch deck** |[![View the pitch deck](https://i.imgur.com/MciAf0O.png)](https://docs.google.com/presentation/d/e/2PACX-1vQlnCTSOKKt2h08IDA2N8Pc5B1LLoYhsxkzwXXdgnDHhHX_r1eM3tADeDBCC66Xyw/pub?start=false&loop=false&delayms=3000) 
-
----
+| Description                                   | Demo                                                                                                                                                     |
+|-----------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **👉 Click the image to watch the demo video** | [![Watch the video](https://i.imgur.com/7LKoxNl.png)](https://drive.google.com/file/d/1-dYw1LEjvwBioJJgKyHAPzA2zJ9YAJmm/view?usp=sharing)                   |
+| **👉 Click the image to view the pitch deck**  | [![View the pitch deck](https://i.imgur.com/MciAf0O.png)](https://docs.google.com/presentation/d/e/2PACX-1vQlnCTSOKKt2h08IDA2N8Pc5B1LLoYhsxkzwXXdgnDHhHX_r1eM3tADeDBCC66Xyw/pub?start=false&loop=false&delayms=3000) |
 
 
 # Documentation

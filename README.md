@@ -1,22 +1,86 @@
-# Voxii - VR Language Learning App
+# Voxii - VR Language Learning App 🌐🕶️
 
-An immersive virtual reality language learning windows desktop application. By simulating common real-world scenarios like ordering coffee in a café, Voxii allows users to learn and practice a new language through realistic, conversational interactions. View your score and error corrections any time during the conversation by a push of a button!
+**Voxii** is an **immersive virtual reality** language learning application designed for Windows desktop. Step into lifelike scenarios—like ordering coffee in a bustling café or navigating a vibrant marketplace—and engage in **realistic, conversational interactions** that make learning a new language both effective and enjoyable.
 
-## Features
+## 🚀 Features
 
-- **Life-like scenes**: Immerse yourself in a different life-like scene to practice speaking
-- **Immersive real-life scenarios**: Practice in a common scenario to hone your english speaking skills
-- **Speech recognition and generation**: Speak directly into your microphone and the Voxii avatar will respond back, similar to real life
-- **Avatar corrections**: If mistakes are made, the avatar politely corrects you
-- **Score and corrections**: Get immediate feedback and improvement tips, along with your score for the conversation you've had so far, with the click of a button
+- 🎭 **Life-like Scenes:** Immerse yourself in diverse environments to practice speaking naturally.
+- 🗣️ **Real-Life Scenarios:** Engage in common situations to enhance your English conversational skills.
+- 🎤 **Speech Recognition & Generation:** Speak directly into your microphone and receive real-time responses from the Voxii avatar.
+- ✅ **Avatar Corrections:** Receive polite and constructive feedback on any mistakes during conversations.
+- 📊 **Score & Corrections:** Access immediate feedback, improvement tips, and track your conversation scores with a single button click.
 
-## Getting started
+## 🛠️ Getting Started
 
-1. Create an API key from [Groq](https://groq.com/) and paste it in a `.env` file at the root location, in the format: `GROQ_API_KEY=<YOUR_GROQ_API_KEY_HERE>`
-2. Launch the game and hold the controller's primary button to start speaking
-3. Listen to the response the AI gives, and continue conversing using step 1.
-4. Press the controller's secondary button to get feedback on the conversation so far
+### 📋 Prerequisites
+Before you begin, ensure you have the following:
 
+- **Operating System:** Windows 10 or higher
+- **Hardware:** Meta Quest 3 headset and controllers
+- **Software:** 
+  - [Unity 2022.3.39f1](https://unity.com/)
+  - [.NET Framework](https://dotnet.microsoft.com/download/dotnet-framework)
+- **API Key:** Obtain an API key from [Groq](https://groq.com/)
+
+### 🏁 Installation Steps
+
+1. **Clone the Repository:**
+    ```bash
+    git clone https://github.com/YourUsername/Voxii.git
+    cd Voxii
+    ```
+
+2. **Configure the API Key:**
+    - Create a `.env` file in the root directory of the project.
+    - Add your Groq API key in the following format:
+      ```
+      GROQ_API_KEY=<YOUR_GROQ_API_KEY_HERE>
+      ```
+
+3. **Install Dependencies:**
+    - Open the project in Unity.
+    - Let Unity import all necessary packages and dependencies.
+
+4. **Launch the Application:**
+    - Press the **Play** button in Unity to start the application.
+    - **Controls:**
+      - **Primary Button (X or A):** Hold to start speaking.
+      - **Secondary Button (Y or B):** Press to receive feedback on your conversation.
+
+### ❓ Troubleshooting
+
+- **API Key Issues:**
+  - Ensure the `.env` file is correctly placed in the root directory.
+  - Verify that the API key is valid and has not expired.
+
+- **Controller Not Responding:**
+  - Check the connection between your VR controllers and the desktop.
+  - Ensure the controllers are properly paired and recognized by the system.
+
+- **Speech Recognition Errors:**
+  - Confirm that your microphone is functioning and properly configured.
+  - Test your microphone with other applications to ensure it's working correctly.
+
+## ⚡ Quick Start
+
+Ready to dive in? Follow these simple steps to start your language learning journey with Voxii:
+
+1. **Set Up Your Environment:**
+    - Ensure all prerequisites are met.
+    - Configure your `.env` file with the Groq API key.
+
+2. **Launch Voxii:**
+    - Open the project in Unity.
+    - Click the **Play** button to start the application.
+
+3. **Begin Learning:**
+    - Hold the **Primary Button (X or A)** on your controller to initiate conversation.
+    - Engage with the Voxii avatar in various scenarios.
+    - Press the **Secondary Button (Y or B)** to receive feedback and track your progress.
+
+4. **Monitor Your Progress:**
+    - View your conversation scores and error corrections in real-time.
+    - Use the feedback to improve your language skills continuously.
 ## Demo
 
 |  | Demos |

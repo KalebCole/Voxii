@@ -72,12 +72,13 @@ Note that only public methods are included here
 - `void setUserSpeaking(bool value)`
   - setter for `userSpeaking` variable
 
-### GameController.cs
-- Handles game related logic
+### LevelManagement
 
-#### Components
-- LoadingSymbolController loadingSymbolController
-- Button testButton
+### Utility
+
+#### XRInputActions.inputactions
+- Contains the mappings which map from the keyboard to the controller's controls
+
 
 #### Methods
 

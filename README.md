@@ -28,300 +28,392 @@ An immersive virtual reality language learning windows desktop application. By s
 ---
 
 
-
 # Documentation
 
-Unity version - 2022.3.39f1
+![Unity](https://img.shields.io/badge/Unity-2022.3.39f1-blue) ![SDK](https://img.shields.io/badge/SDK-.NET_Framework-blue)
 
-SDK version - .NET Framework
+*Note: Only public methods are included here.*
 
-Note that only public methods are included here
+## 📑 Table of Contents
 
-## Folder Structure within /Assets/Scripts
+1. [Folder Structure](#folder-structure-within-assetscripts)
+2. [Classes in Each Folder](#classes-in-each-folder)
+   - [AI 🤖](#assetsai)
+     - [AIVoice.cs 🎤](#aivoicecs-static-class)
+     - [ChatLoop.cs 🔄](#chatloopcs)
+     - [GroqApiClient.cs 📡](#groqapiclientcs)
+     - [Scorer.cs 📝](#scorercs)
+     - [WhisperTranscriber.cs 🗣️](#whispertranscribercs)
+     - [SentimentAnalyzer.cs 😊](#sentimentanalyzercs)
+   - [LevelManagement 🎮](#assetslevelmanagement)
+     - [OnboardingData.cs 📄](#onboardingdatacs)
+     - [FeedbackScreenController.cs 💬](#feedbackscreencontrollercs)
+     - [LevelManagement.cs ↔️](#levelmanagementcs)
+     - [MenuData.cs 🗂️](#menudatacs-static-class)
+     - [ResultsData 📊](#resultsdata)
+   - [Utility 🛠️](#assetsutility)
+     - [XRInputActions.inputactions 🎮](#xrinputactionsinputactions)
+     - [LoadingSymbolController.cs ⏳](#loadingsymbolcontrollercs)
+     - [MicRecorder.cs 🎙️](#micrecordercs)
+     - [PrimaryBtnHold.cs ▶️](#primarybtnholdcs)
+     - [SecondaryBtnPress.cs 🔁](#secondarybtnpresscs)
+     - [SaveWavFile.cs (WavUtility) 💾](#savewavfilecs-static-class---wavutility)
+     - [BackgroundMusicController.cs 🎵](#backgroundmusiccontrollercs)
 
-- **AI**: Contains the AI avatar's logic and the Grammar Checker AI logic
-- **LevelManagement**: Contains the logic for managing the various scenes from the main menu to the post-level screen
-- **Utility**: Contains utility scripts like the SendWavFile for saving audio clips as .wav files
+---
 
+## 📂 Folder Structure within `/Assets/Scripts`
 
-## Classes in Each Folder
+- **AI** 🤖: Contains the AI avatar's logic and the Grammar Checker AI logic
+- **LevelManagement** 🎮: Contains the logic for managing the various scenes from the main menu to the post-level screen
+- **Utility** 🛠️: Contains utility scripts like the `SendWavFile` for saving audio clips as `.wav` files
+
+## 📚 Classes in Each Folder
 
 ### /Assets/AI
 
-#### AIVoice.cs (static class)
-- Text to speech for the AI avatar
+<details>
+  <summary><strong>AIVoice.cs</strong> (static class) 🎤</summary>
 
-##### Methods
+  **Description:**  
+  Text to speech for the AI avatar
 
-- `static async Task Speak(string msg)`
-  - Asynchronously outputs AI speech for the given message using Piper TTS
- 
-- `static async Task SpeakRepeat()`
-  - Outputs the "Can you repeat that" message audio
- 
-- `static async Task SpeakInitialMsg()`
-  - Outputs the initial message for the specific avatar
+  ##### 🛠️ Methods
+  - `static async Task Speak(string msg)`
+    - Asynchronously outputs AI speech for the given message using Piper TTS
+  - `static async Task SpeakRepeat()`
+    - Outputs the "Can you repeat that" message audio
+  - `static async Task SpeakInitialMsg()`
+    - Outputs the initial message for the specific avatar
 
-#### ChatLoop.cs
-- The user-avatar conversation loop
+</details>
 
-##### Public variables:
-- GroqApiClient groqApi
-- bool isResponding: Keeps track of whether the AI is responding
-- bool userSpeaking: Keeps track of whether the user is speaking
-- string chatLogFilePath: The file path for the chat logs
-- GameObject loadingSymbol
-- int msgsSent
-- TextMeshProUGUI messagesRemainingValue
-- LevelManagement levelManagement
+<details>
+  <summary><strong>ChatLoop.cs</strong> 🔄</summary>
 
-##### Methods
+  **Description:**  
+  The user-avatar conversation loop
 
-- `async Task SendUserMessage(string msg)`
-  - Sends the given message to the AI avatar, adds it to the logs and chat history
-- `void setIsResponding(bool value)`
-  - setter for `isResponding` variable
-- `void setUserSpeaking(bool value)`
-  - setter for `userSpeaking` variable
+  ##### ⚙️ Public Variables
+  - `GroqApiClient groqApi`
+  - `bool isResponding`: Tracks if the AI is responding
+  - `bool userSpeaking`: Tracks if the user is speaking
+  - `string chatLogFilePath`: File path for chat logs
+  - `GameObject loadingSymbol`
+  - `int msgsSent`
+  - `TextMeshProUGUI messagesRemainingValue`
+  - `LevelManagement levelManagement`
 
-#### GroqApiClient.cs
-- Handles the requests sent to Groq's llama3
+  ##### 🛠️ Methods
+  - `async Task SendUserMessage(string msg)`
+    - Sends a message to the AI avatar, adds it to logs and chat history
+  - `void setIsResponding(bool value)`
+    - Setter for `isResponding`
+  - `void setUserSpeaking(bool value)`
+    - Setter for `userSpeaking`
 
-##### Methods
+</details>
 
-- `GroqApiClient(string apiKey = "")`
-  - Initializes the groq api client with the API key
-  - If no API key is provided it will try searching for one in a `.env` file
+<details>
+  <summary><strong>GroqApiClient.cs</strong> 📡</summary>
 
-- `async Task<JObject?> CreateChatCompletionAsync(JObject request)`
-  - The request to send to the AI, including the parameters and the chat history
-#### Scorer.cs
-- Contains the AI scoring logic for the user's english
+  **Description:**  
+  Handles requests sent to Groq's llama3
 
-##### Public variables
-- GroqApiClient groqApi
+  ##### 🛠️ Methods
+  - `GroqApiClient(string apiKey = "")`
+    - Initializes the Groq API client with an API key or from a `.env` file
+  - `async Task<JObject?> CreateChatCompletionAsync(JObject request)`
+    - Sends a request to the AI, including parameters and chat history
 
-##### Methods
+</details>
 
-- `Scorer(string chatLogFilePath)`
-  - Initializes the scorer with the chat logs of the conversation so far
- 
-- `async Task<string> GetScore()`
-  - Gets the score on the user's english of the conversation
+<details>
+  <summary><strong>Scorer.cs</strong> 📝</summary>
 
-- `async Task<string> GetResponseOutput(JArray msgs)`
-  - Overload the GetResponseOutput method to accept a JArray parameter
-  - This is useful for testing the scoring system with different chat logs
- 
-- `ScoreResult ParseScoreNumbers(string scoreString)`
-  - Parse the score string to extract the number of errors and accuracy
-- `SentimentResult ParseSentiment(string scoreString)`
-  - Parse the sentiment from the AI response
-- `public List<ErrorExample> ParseErrorExamples(string scoreString)`
-  - Parse the error examples from the AI response
-- `float CalculateResponseTime(string chatLogFilePath)`
-  - Calculate the time taken for the user to respond to the AI
-- `static int CalculatePoints(ScoreResult scoreResult, float responseTime)`
-  - Calculate the points based on the score result
-- `async Task<int> CalculatePointsAsync()`
-  - Step by step calculation of points
-- `async Task<(ScoreResult, float, List<ErrorExample>)> GetResultsAndResponseTimeAsync`
-  - Get ScoreResult object
-- `class ScoreResult`
-  - Keeps data needed for score result (NumberOfErrors, Accuracy)
-- `class SentimentResult`
-  - Keeps data needed for sentiment result (Sentiment)
-- `class ErrorExample`
-  - Keeps data needed for error examples (Category, Incorrect, Corrected, Reasoning)
+  **Description:**  
+  Contains the AI scoring logic for the user's English
 
-#### WhisperTranscriber.cs
-- Contains the logic for transcribing the user's speech to text
+  ##### ⚙️ Public Variables
+  - `GroqApiClient groqApi`
 
-##### Components
-- TextMeshProUGUI displayText
+  ##### 🛠️ Methods
+  - `Scorer(string chatLogFilePath)`
+    - Initializes the scorer with the chat logs of the conversation so far
+  - `async Task<string> GetScore()`
+    - Gets the score on the user's English of the conversation
+  - `async Task<string> GetResponseOutput(JArray msgs)`
+    - Overload the GetResponseOutput method to accept a JArray parameter
+    - Useful for testing the scoring system with different chat logs
+  - `ScoreResult ParseScoreNumbers(string scoreString)`
+    - Parses the score string to extract the number of errors and accuracy
+  - `SentimentResult ParseSentiment(string scoreString)`
+    - Parses the sentiment from the AI response
+  - `public List<ErrorExample> ParseErrorExamples(string scoreString)`
+    - Parses the error examples from the AI response
+  - `float CalculateResponseTime(string chatLogFilePath)`
+    - Calculates the time taken for the user to respond to the AI
+  - `static int CalculatePoints(ScoreResult scoreResult, float responseTime)`
+    - Calculates the points based on the score result
+  - `async Task<int> CalculatePointsAsync()`
+    - Step-by-step calculation of points
+  - `async Task<(ScoreResult, float, List<ErrorExample>)> GetResultsAndResponseTimeAsync`
+    - Gets ScoreResult object
+  - `class ScoreResult`
+    - Holds data needed for score result (NumberOfErrors, Accuracy)
+  - `class SentimentResult`
+    - Holds data needed for sentiment result (Sentiment)
+  - `class ErrorExample`
+    - Holds data needed for error examples (Category, Incorrect, Corrected, Reasoning)
 
-##### Methods
+</details>
 
-- `async Task<string> TranscribeRecording()`
-  - Gets the string for the user's speech stored in `recording.wav` in the application's persistent data path
- 
-#### SentimentAnalyzer.cs
-- Contains the logic to analyze the sentiment of the AI response every time the AI responds
-- Used to update the animation of the AI avatar
+<details>
+  <summary><strong>WhisperTranscriber.cs</strong> 🗣️</summary>
 
-##### Methods
-- `public async Task<bool> IsPositiveOrNeutralSentiment(string message)`
-  - Sends the AI avatar's response to the Groq API to analyze the sentiment
-  - Returns true if the sentiment is positive or neutral, false otherwise
+  **Description:**  
+  Contains the logic for transcribing the user's speech to text
+
+  ##### 🛠️ Components
+  - `TextMeshProUGUI displayText`
+
+  ##### 🛠️ Methods
+  - `async Task<string> TranscribeRecording()`
+    - Retrieves the string for the user's speech stored in `recording.wav` in the application's persistent data path
+
+</details>
+
+<details>
+  <summary><strong>SentimentAnalyzer.cs</strong> 😊</summary>
+
+  **Description:**  
+  Analyzes the sentiment of the AI response each time the AI responds  
+  Used to update the animation of the AI avatar
+
+  ##### 🛠️ Methods
+  - `public async Task<bool> IsPositiveOrNeutralSentiment(string message)`
+    - Sends the AI avatar's response to the Groq API to analyze the sentiment
+    - Returns `true` if the sentiment is positive or neutral, `false` otherwise
+
+</details>
 
 ### /Assets/LevelManagement
 
-#### OnboardingData.cs
-- Data container class to hold onboarding data instances
+<details>
+  <summary><strong>OnboardingData.cs</strong> 📄</summary>
 
-##### Public variables
-- string PersonName { get; set; }
-- string LanguageProficiency { get; set; }
-- string LanguageToLearn { get; set; }
-- List<string> PhrasesToWorkOn { get; set; }
-- string Scene { get; set; }
-- Dictionary<string, string> SceneToRole { get; set; }
+  **Description:**  
+  Data container class to hold onboarding data instances
 
-#### FeedbackScreenController.cs
-- Controls the feedback screen
+  ##### ⚙️ Public Variables
+  - `string PersonName { get; set; }`
+  - `string LanguageProficiency { get; set; }`
+  - `string LanguageToLearn { get; set; }`
+  - `List<string> PhrasesToWorkOn { get; set; }`
+  - `string Scene { get; set; }`
+  - `Dictionary<string, string> SceneToRole { get; set; }`
 
-##### Public variables
-- GameObject screen1;
-- GameObject screen2;
-- Button nextButton;
-- Button doneButton;
-- TextMeshProUGUI pointValue;
-- TextMeshProUGUI grammarErrorValue;
-- TextMeshProUGUI responseTimeValue;
-- TextMeshProUGUI relevanceValue;
-- TextMeshProUGUI feedbackCategory;
-- TextMeshProUGUI feedbackIncorrect;
-- TextMeshProUGUI feedbackCorrected;
-- TextMeshProUGUI feedbackReasoning;
+</details>
 
-##### Methods
+<details>
+  <summary><strong>FeedbackScreenController.cs</strong> 💬</summary>
 
-- `void ShowSecondScreen`
-- `void ChangeToMenuScene`
+  **Description:**  
+  Controls the feedback screen
 
-#### LevelManagement.cs
-- Switches between the main menu and the post-level screen displays based on the scene
+  ##### ⚙️ Public Variables
+  - `GameObject screen1`
+  - `GameObject screen2`
+  - `Button nextButton`
+  - `Button doneButton`
+  - `TextMeshProUGUI pointValue`
+  - `TextMeshProUGUI grammarErrorValue`
+  - `TextMeshProUGUI responseTimeValue`
+  - `TextMeshProUGUI relevanceValue`
+  - `TextMeshProUGUI feedbackCategory`
+  - `TextMeshProUGUI feedbackIncorrect`
+  - `TextMeshProUGUI feedbackCorrected`
+  - `TextMeshProUGUI feedbackReasoning`
 
-##### Public variables
-- GameObject display1
-- GameObject display2
+  ##### 🛠️ Methods
+  - `void ShowSecondScreen()`
+  - `void ChangeToMenuScene()`
 
-##### Methods
-- `void goToMainMenu`
-- `void goToPostLevel`
-- `void switchDisplays`
+</details>
 
-#### MenuData.cs (static class)
-##### Public variables
-- static List<bool> OptionsSelected
-- static string SceneSelection
-- static float LanguageProficiency
-- static float AvatarHostility
-- static string filePath
+<details>
+  <summary><strong>LevelManagement.cs</strong> ↔️</summary>
 
-##### Methods
-- `static void SetFilePath(string appDataPath)`
-  - Needed because Application.persistentDataPath can't be accessed by a static non-MonoBehavior class
-- `static void SaveDataToJson`
-- `static void LoadDataFromJson`
-- `static string getRole`
-  - Gets the role depending on the scene
-- `class MenuDataModel`
-  - Stores needed data (OptionsSelected, SceneSelection, LanguageProficiency, AvatarHostility)
+  **Description:**  
+  Switches between the main menu and the post-level screen displays based on the scene
 
-#### ResultsData
-- Class to store result data
-  
-##### Public variables
+  ##### ⚙️ Public Variables
+  - `GameObject display1`
+  - `GameObject display2`
 
-- static int points;
-- static int errors;
-- static int relevanceScore;
-- static int responseTime;
-- static string feedbackCategory;
-- static string feedbackIncorrect;
-- static string feedbackCorrected;
-- static string feedbackReasoning;
+  ##### 🛠️ Methods
+  - `void goToMainMenu()`
+  - `void goToPostLevel()`
+  - `void switchDisplays()`
 
+</details>
+
+<details>
+  <summary><strong>MenuData.cs</strong> 🗂️ (static class - WavUtility)</summary>
+
+  **Description:**  
+  Handles menu data storage and retrieval
+
+  ##### ⚙️ Public Variables
+  - `static List<bool> OptionsSelected`
+  - `static string SceneSelection`
+  - `static float LanguageProficiency`
+  - `static float AvatarHostility`
+  - `static string filePath`
+
+  ##### 🛠️ Methods
+  - `static void SetFilePath(string appDataPath)`
+    - Needed because `Application.persistentDataPath` can't be accessed by a static non-MonoBehavior class
+  - `static void SaveDataToJson()`
+  - `static void LoadDataFromJson()`
+  - `static string getRole()`
+    - Retrieves the role based on the scene
+  - `class MenuDataModel`
+    - Stores necessary data (`OptionsSelected`, `SceneSelection`, `LanguageProficiency`, `AvatarHostility`)
+
+</details>
+
+<details>
+  <summary><strong>ResultsData.cs</strong> 📊</summary>
+
+  **Description:**  
+  Class to store result data
+
+  ##### ⚙️ Public Variables
+  - `static int points`
+  - `static int errors`
+  - `static int relevanceScore`
+  - `static int responseTime`
+  - `static string feedbackCategory`
+  - `static string feedbackIncorrect`
+  - `static string feedbackCorrected`
+  - `static string feedbackReasoning`
+
+</details>
 
 ### /Assets/Utility
 
-#### XRInputActions.inputactions
-- Contains the mappings which map from the keyboard to the controller's controls
+<details>
+  <summary><strong>XRInputActions.inputactions</strong> 🎮</summary>
 
-##### Methods
+  **Description:**  
+  Contains the mappings which map from the keyboard to the controller's controls
 
-- `void StartLoading()`
-  - Initializes the loading icon logic
- 
-#### LoadingSymbolController.cs
-- Handles the loading symbol logic
+  ##### 🛠️ Methods
+  - `void StartLoading()`
+    - Initializes the loading icon logic
 
-##### Components
-- GameObject loadingSymbol
+</details>
 
-##### Methods
+<details>
+  <summary><strong>LoadingSymbolController.cs</strong> ⏳</summary>
 
-- `void ShowLoadingSymbol()`
-  - Shows the loading symbol
- 
-- `void HideLoadingSymbol()`
-  - Hides the loading symbol
+  **Description:**  
+  Handles the loading symbol logic
 
+  ##### 🛠️ Components
+  - `GameObject loadingSymbol`
 
-#### MicRecorder.cs
-- Handles recording through the microphone
+  ##### 🛠️ Methods
+  - `void ShowLoadingSymbol()`
+    - Displays the loading symbol
+  - `void HideLoadingSymbol()`
+    - Hides the loading symbol
 
-##### Components
-- GameObject loadingSymbol
+</details>
 
-##### Methods
+<details>
+  <summary><strong>MicRecorder.cs</strong> 🎙️</summary>
 
-- `void StartRecording()`
-  - Starts recording the microphone
+  **Description:**  
+  Handles recording through the microphone
 
-- `void StopRecording()`
-  - Stops recording the microphone
- 
-- `void SaveRecording()`
-  - Saves the recording in the persistent data path as "recording.wav"
- 
-- `void PlayRecording()`
-  - Plays the recording
-  
+  ##### 🛠️ Components
+  - `GameObject loadingSymbol`
 
-#### PrimaryBtnHold.cs
-- Logic for what should happen when the primary button is held
+  ##### 🛠️ Methods
+  - `void StartRecording()`
+    - Starts recording the microphone
+  - `void StopRecording()`
+    - Stops recording the microphone
+  - `void SaveRecording()`
+    - Saves the recording in the persistent data path as `recording.wav`
+  - `void PlayRecording()`
+    - Plays the recording
 
-##### Components
-- InputActionAsset inputActionAsset
-- MicRecorder micRecorder
-- WhisperTranscriber whisperTranscriber
-- ChatLoop chatLoop
+</details>
 
-##### Public variables
-- bool isRecording: Tracks whether the application is recording
+<details>
+  <summary><strong>PrimaryBtnHold.cs</strong> ▶️</summary>
 
-#### SecondaryBtnPress.cs
-- Logic for what should happen when the secondary button is pressed
+  **Description:**  
+  Logic for actions when the primary button is held
 
-##### Components
-- InputActionAsset inputActionAsset
-- ChatLoop chatLoop
-- PrimaryBtnHold primaryBtnHold
+  ##### 🛠️ Components
+  - `InputActionAsset inputActionAsset`
+  - `MicRecorder micRecorder`
+  - `WhisperTranscriber whisperTranscriber`
+  - `ChatLoop chatLoop`
 
-#### SaveWavFile.cs (static class - WavUtility)
-- Contains logic to save an audio clip to a location in the `.wav` format
+  ##### ⚙️ Public Variables
+  - `bool isRecording`: Tracks whether the application is recording
 
-##### Methods
+</details>
 
-- `static byte[] FromAudioClip(AudioClip clip)`
-  - Converts an audio clip into byte[]
- 
-- `static void SaveWav(string filePath, AudioClip clip)`
-  - Saves the audio clip as a `.wav` file into the specified path
- 
-#### BackgroundMusicController.cs
+<details>
+  <summary><strong>SecondaryBtnPress.cs</strong> 🔁</summary>
 
-- Controls the background music
+  **Description:**  
+  Logic for actions when the secondary button is pressed
 
-##### Public variables
-- Button muteButton
-- GameObject symbol: symbol to show the mute button
-- Sprite unmutedImage
-- Sprite mutedImage
+  ##### 🛠️ Components
+  - `InputActionAsset inputActionAsset`
+  - `ChatLoop chatLoop`
+  - `PrimaryBtnHold primaryBtnHold`
 
-##### Methods
-- `void ToggleMute`
-- `UpdateButtonImage`
-  - Changes the button image based on the mute state
+</details>
+
+<details>
+  <summary><strong>SaveWavFile.cs</strong> 💾 (static class - WavUtility)</summary>
+
+  **Description:**  
+  Contains logic to save an audio clip in `.wav` format
+
+  ##### 🛠️ Methods
+  - `static byte[] FromAudioClip(AudioClip clip)`
+    - Converts an audio clip into `byte[]`
+  - `static void SaveWav(string filePath, AudioClip clip)`
+    - Saves the audio clip as a `.wav` file to the specified path
+
+</details>
+
+<details>
+  <summary><strong>BackgroundMusicController.cs</strong> 🎵</summary>
+
+  **Description:**  
+  Controls the background music
+
+  ##### ⚙️ Public Variables
+  - `Button muteButton`
+  - `GameObject symbol`: Symbol to show the mute button
+  - `Sprite unmutedImage`
+  - `Sprite mutedImage`
+
+  ##### 🛠️ Methods
+  - `void ToggleMute()`
+  - `void UpdateButtonImage()`
+    - Changes the button image based on the mute state
+
+</details>
+
+---
